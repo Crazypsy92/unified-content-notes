@@ -75,11 +75,13 @@ The `examples/` directory contains **newly written demonstration sources and out
 
 | Example | Demonstrates |
 | --- | --- |
-| [`argument-input.md`](examples/argument-input.md) → [`argument-summary.md`](examples/argument-summary.md) | Summarize a multi-point argument with numerical details |
-| [`narrative-input.md`](examples/narrative-input.md) → [`narrative-summary.md`](examples/narrative-summary.md) | Preserve events, motivation, and a small reveal |
-| [`format-input.md`](examples/format-input.md) → [`format-only.md`](examples/format-only.md) | Keep every non-format character unchanged |
+| [Argument input](examples/argument-input.md) → [summary](examples/argument-summary.md) / [explanation](examples/argument-explanation.md) | Same source, two distinct actions; preserves 180°C / 20-minute details and separates analysis from source claims |
+| [Narrative input](examples/narrative-input.md) → [summary](examples/narrative-summary.md) / [explanation](examples/narrative-explanation.md) | Keeps event order, character motivation, the reveal, and the deliberately unresolved ending |
+| [Documentary input](examples/documentary-input.md) → [explanation](examples/documentary-explanation.md) | Separates observation, expert statement, a resident's personal experience, plans, and missing evidence |
+| [Carousel input](examples/carousel-input.md) → [summary](examples/carousel-summary.md) | Preserves card order, numeric examples, author additions, and reader comments as separate sources |
+| [Format input](examples/format-input.md) → [format-only](examples/format-only.md) | Keeps every non-layout character unchanged |
 
-Examples illustrate output *behaviors*, not mandatory templates.
+Examples illustrate output *behaviors*, not mandatory templates. See the [examples guide](examples/README.md) for the full input/output matrix and how to reproduce comparisons.
 
 ## Boundaries
 
