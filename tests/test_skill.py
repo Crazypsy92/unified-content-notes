@@ -61,7 +61,7 @@ class SkillPackageTests(unittest.TestCase):
         summary = read("examples/argument-summary.md")
         explanation = read("examples/argument-explanation.md")
         self.assertNotEqual(summary, explanation)
-        self.assertIn("总结", read("examples/README.md"))
+        self.assertIn("Summarize", read("examples/README.md"))
         self.assertIn("为什么", explanation)
         self.assertIn("不能断定", explanation)
 
