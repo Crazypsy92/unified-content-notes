@@ -24,7 +24,7 @@ description: 中文多平台内容整理统一入口。适用于用户提供或�
 | 素材结构 / 任务 | 加载文件 |
 | --- | --- |
 | 观点、评论、论证、长篇文案 | [通用观点分析](core/argument-analysis.md)；Obsidian 输出再加载 [观点分析型排版](references/obsidian-argument-layout.md) |
-| 恋爱、亲密关系、沟通、婚姻等观点材料 | 先加载通用观点分析，再加载 [情感观点分析](modules/relationship-analysis.md) |
+| 恋爱、亲密关系、沟通、婚姻等观点材料 | 先加载通用观点分析；Obsidian 阅读再加载观点分析型排版；最后叠加 [情感观点分析](modules/relationship-analysis.md) |
 | 小说、电影、真人经历、故事、人物弧线 | [叙事分析](core/narrative-analysis.md) |
 | 纪录片、科普、历史调查、知识解释 | [知识与纪实分析](core/knowledge-analysis.md) |
 | 多轮聊天、情侣对话、访谈问答 | [对话分析](core/dialogue-analysis.md) |
