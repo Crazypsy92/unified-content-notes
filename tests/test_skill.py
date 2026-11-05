@@ -72,6 +72,14 @@ class SkillPackageTests(unittest.TestCase):
                 self.assertIn(target, content)
                 self.assertIn("兼容", content)
 
+    def test_platform_reference_is_optional_and_platform_specific(self):
+        content = read("references/platform-and-source.md")
+        self.assertIn("按需加载", content)
+        self.assertIn("core/source-boundaries.md", content)
+        for platform in ("抖音", "Bilibili", "小红书", "X / Twitter"):
+            with self.subTest(platform=platform):
+                self.assertIn(platform, content)
+
     def test_format_only_has_zero_semantic_edit_guardrails(self):
         content = read("core/format-only.md")
         for phrase in ("不总结", "不润色", "不改变", "保真核对"):
