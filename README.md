@@ -61,7 +61,7 @@ Natural language works too; the `$unified-content-notes` prefix is useful where 
 - Preserve the **original title**. If no title is supplied, do not pretend a new one is original.
 - The highest heading level in generated Markdown is `##`; use `###` for subsections.
 - Indent Chinese prose paragraphs with **two full-width spaces** (`　　`). Do not indent tables, Markdown lists, headings, or quotes.
-- In long opinion pieces, a compact **claim / reasoning / examples** overview table is usually helpful. In stories and format-only work, avoid forcing a table.
+- For long opinion-led material with cases, use a **claim / source case or evidence / reasoning / takeaway** table, followed by analytical prose that expands each important case. Do not turn an argument into a light-novel or storybook retelling. Stories remain narrative; format-only work gets no added analysis table.
 
 ### Relationship opinion pieces: analytical layout, not story-style prose
 
@@ -82,6 +82,34 @@ See [references/relationship-analysis.md](references/relationship-analysis.md) f
 
 Explicit instructions from the user take priority over these defaults.
 
+## Opinion analysis and case-rich writing
+
+For argument-led material—especially relationship commentary with several real-life examples—the default is an **analytical article with evidence**, not a storybook or light-novel retelling.
+
+The expected layout is:
+
+1. Preserve the original title and add source metadata only when available.
+2. State the central idea directly in a short **Article thesis** section.
+3. Add a compact **claim / source case or evidence / reasoning / takeaway** table.
+4. Write the body as a structured analysis, using headings that express the argument (for example, “Why delayed communication creates uncertainty”), not literary scene titles.
+5. Expand every important case in the body: context, observable facts, key dialogue, response or outcome, and what the case supports.
+6. Compare cases when their differences help explain the argument.
+7. Close with the actual takeaway and any necessary limits.
+
+**Do not turn analytical material into a fictionalized narrative.** No invented atmosphere, inner monologue, gestures, suspense, or dialogue. Case detail is included to support reasoning, not to create a dramatic scene.
+
+### Dialogue formatting
+
+Original couple dialogue may be visually separated with speaker labels:
+
+> **Partner A:** I can understand that you will be late, but why didn't you tell me earlier?
+>
+> **Partner B:** I thought I would finish soon, but it took longer than expected.
+
+Follow the exchange with analysis. For longer conversations, a compact comparison table may help distinguish the actual wording, observable concern, and possible effect. Keep original dialogue separate from any newly suggested rewrite.
+
+See [the argument-analysis layout guide](references/argument-analysis-layout.md) and the [case-rich example](examples/argument-case-output.md).
+
 ## Examples
 
 The `examples/` directory contains **newly written demonstration sources and outputs**, so this public repository does not republish long excerpts from other creators' videos, books, or users' private notes.
@@ -89,6 +117,7 @@ The `examples/` directory contains **newly written demonstration sources and out
 | Example | Demonstrates |
 | --- | --- |
 | [Argument input](examples/argument-input.md) → [summary](examples/argument-summary.md) / [explanation](examples/argument-explanation.md) | Same source, two distinct actions; preserves 180°C / 20-minute details and separates analysis from source claims |
+| [Case-rich argument input](examples/argument-case-input.md) → [analysis output](examples/argument-case-output.md) | Demonstrates a claim/evidence/reasoning table, analytical case expansion, and readable dialogue blocks without storybook prose |
 | [Narrative input](examples/narrative-input.md) → [summary](examples/narrative-summary.md) / [explanation](examples/narrative-explanation.md) | Keeps event order, character motivation, the reveal, and the deliberately unresolved ending |
 | [Documentary input](examples/documentary-input.md) → [explanation](examples/documentary-explanation.md) | Separates observation, expert statement, a resident's personal experience, plans, and missing evidence |
 | [Carousel input](examples/carousel-input.md) → [summary](examples/carousel-summary.md) | Preserves card order, numeric examples, author additions, and reader comments as separate sources |
