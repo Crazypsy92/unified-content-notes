@@ -63,18 +63,6 @@ Natural language works too; the `$unified-content-notes` prefix is useful where 
 - Indent Chinese prose paragraphs with **two full-width spaces** (`　　`). Do not indent tables, Markdown lists, headings, or quotes.
 - For long opinion-led material with cases, use a **claim / source case or evidence / reasoning / takeaway** table, followed by analytical prose that expands each important case. Do not turn an argument into a light-novel or storybook retelling. Stories remain narrative; format-only work gets no added analysis table.
 
-### Relationship opinion pieces: analytical layout, not story-style prose
-
-For relationship and emotional-content material with several real-life examples, use the **claim-and-case analysis layout** by default:
-
-1. State the article's central idea in direct language.
-2. Add a compact table mapping each claim to its source case/evidence, reasoning, and conclusion.
-3. Develop the body as a structured analytical essay. Give each major claim a clear subsection; present each important case with only the relevant context, actions, key dialogue, and outcome, then explain what the evidence supports.
-4. Keep cases as evidence, not as light-novel scenes. Do not invent atmosphere, gestures, inner monologues, suspense, or dramatic endings.
-5. Format meaningful couple dialogue in restrained Markdown quote blocks with clear speaker labels, followed immediately by analysis.
-6. Use complete analytical paragraphs and a small number of meaningful headings. Avoid one-sentence-per-line fragmentation, excessive subheadings, and decorative formatting.
-
-See [references/relationship-analysis.md](references/relationship-analysis.md) for the full Chinese writing and layout specification, and [the relationship analysis example](examples/relationship-argument-summary.md) for a worked sample.
 - Favor **high-fidelity compression** over extreme brevity: preserve independent claims, meaningful counterexamples, numbers, key dialogue, and turning points.
 - Avoid narrator-style commentary such as “the speaker says” when a clean standalone digest is requested.
 - Never silently change the text in **format-only** mode.
