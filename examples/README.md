@@ -13,6 +13,7 @@ The public instructions are in English. Chinese outputs demonstrate the skill's 
 | Summarize a short story | [narrative-input.md](narrative-input.md) | [narrative-summary.md](narrative-summary.md) | Keeps character motivation, event sequence and the final reveal |
 | Explain the same story | [narrative-input.md](narrative-input.md) | [narrative-explanation.md](narrative-explanation.md) | Grounds an interpretation in specific actions instead of adding an invented backstory |
 | Format without rewriting | [format-input.md](format-input.md) | [format-only.md](format-only.md) | Preserves every non-layout character while improving reading rhythm |
+| Relationship opinion analysis | [relationship-argument-input.md](relationship-argument-input.md) | [relationship-argument-summary.md](relationship-argument-summary.md) | Maps claims to cases, expands evidence in analytical prose, and formats couple dialogue without novel-style narration |
 
 ## More source structures
 
