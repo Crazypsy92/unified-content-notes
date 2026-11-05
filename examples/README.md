@@ -4,6 +4,18 @@ All material in this directory is **original demonstration content** written for
 
 The public instructions are in English. Chinese outputs demonstrate the skill's default writing conventions.
 
+## Canonical Obsidian argument-analysis examples
+
+The **current default** for argument-analysis mode is **one topic heading, compact evidence/reasoning table, case-rich condensed paragraphs, and a collapsed complete original when actually available**. These examples are original demonstration material, not user-uploaded transcripts:
+
+| Source | Output | Acceptance focus |
+| --- | --- | --- |
+| [General opinion input](obsidian-argument-input.md) | [Obsidian argument output](obsidian-argument-output.md) | Table plus complete cases, natural paragraph rhythm, exact folded source text |
+| [Relationship argument input](relationship-argument-input.md) | [Relationship Obsidian output](relationship-argument-summary.md) | Same base layout plus relationship-specific interpretation, no independent relationship layout |
+| [Case-rich argument input](argument-case-input.md) | [Case-rich Obsidian output](argument-case-output.md) | Dialogue, two distinct cases, and folded original kept separately |
+
+The prior narrative, documentary, carousel, and format-only examples keep their own structures and **do not inherit** the Obsidian argument layout unless explicitly requested.
+
 ## Compare actions on the same source
 
 | Request | Input | Expected output | What to inspect |
