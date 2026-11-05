@@ -56,12 +56,69 @@ $unified-content-notes 只改这篇小故事的 Markdown 排版，一个字也�
 
 Natural language works too; the `$unified-content-notes` prefix is useful where the skill loader supports explicit invocation.
 
+## Choose a mode
+
+The skill uses **two independent choices**:
+
+- **Action** — what you want done: summarize, explain, or format only.
+- **Content mode** — what kind of material it is: opinion, story, dialogue, short copy, method, personal reflection, and so on.
+
+You can specify both, or simply name the content mode. If you only say “整理一下”, the skill infers the best fit from the source and defaults to high-fidelity summarization. Explicit instructions always take priority.
+
+### Actions
+
+| Action | Use it for | Result |
+| --- | --- | --- |
+| **Summarize / 高保真浓缩** | Condense while retaining the source's independent ideas and evidence | A readable, structured note; removes repetition, not essential reasoning |
+| **Explain / 深度讲解** | Understand why a claim works, how a process unfolds, or what a character's actions mean | Source-grounded explanation with additional interpretation clearly distinguished |
+| **Format only / 只改格式** | Improve Markdown readability without rewriting | Original wording and event order are preserved; no analysis or extra content is added |
+
+### Content modes
+
+| Prompt mode | Use it for | Typical output |
+| --- | --- | --- |
+| **文案 + 观点分析型** | Relationship commentary, opinion-led short videos, arguments about communication, attraction, marriage, boundaries, or personal growth | Original title + compact claim/evidence/reasoning table + high-fidelity analytical body; important cases are explained in the body, not merely listed in the table |
+| **文案 + 故事 / 经历型** | Real-life stories, relationship experiences, narrative posts, personal anecdotes | Event order, people, actions, key dialogue, emotional changes, and outcome; no forced argument table |
+| **文案 + 情侣对话型** | Chat logs, conflict conversations, date or relationship dialogue | Clear speaker labels and readable dialogue blocks; analysis or rewrite is added only when requested |
+| **文案 + 短文案 / 金句型** | Short quotes, captions, one-line opinions, quote collections | Preserve original wording; group by theme when useful; do not inflate short lines into essays |
+| **文案 + 方法 / 经验型** | Advice, communication methods, practical lessons, step-by-step experience | Problem, principle, steps, examples, conditions, and limitations |
+| **文案 + 个人感悟型** | First-person reflections, journals, lessons learned, emotional processing | Preserve the writer's first-person voice, uncertainty, and personal judgment |
+| **作品 + 剧情 / 人物解读型** | Film, novel, documentary, or character analysis | Plot facts and character actions first; interpretation is grounded in specific evidence |
+| **图文 + 多页卡片型** | Xiaohongshu carousels, screenshot collections, slide-like posts | Preserve page order, text in each image, numbers, and relationships between cards |
+| **混合型 / 自动判断** | A source that combines opinion, cases, dialogue, and practical advice | Route each section according to its actual structure instead of forcing one template |
+
+### Copy-and-use prompts
+
+Use these directly in Codex or a compatible agent:
+
+> **文案 + 观点分析型：** 使用 $unified-content-notes，总结这份文案。按高保真浓缩处理，保留原始标题、独立论点、关键论据、案例、对话、数字、比喻和推理过程。表格用于总览，正文要把重要案例讲清楚；不要写成第三人称视频解析，也不要为了缩短篇幅删掉论证。
+
+> **文案 + 故事型：** 使用 $unified-content-notes，整理这篇故事。保留人物关系、事件顺序、关键动作、对话、情绪变化和结局，不要强行改成观点分析或补写原文没有的细节。
+
+> **文案 + 情侣对话型：** 使用 $unified-content-notes，把这段对话按说话人和轮次排版，保留原话。先不要改写；如需分析，再单独解释双方表达的需求和冲突点。
+
+> **文案 + 短文案 / 金句型：** 使用 $unified-content-notes，保留原句和原始标题，按主题归类；不要把短句扩写成文章，不确定的来源标为未注明。
+
+> **文案 + 方法 / 经验型：** 使用 $unified-content-notes，整理成方法笔记，保留步骤顺序、具体示例、参数、适用条件和注意事项。
+
+> **文案 + 个人感悟型：** 使用 $unified-content-notes，整理这段个人感悟，保留第一人称、原有情绪和不确定之处，不要改写成第三人称大道理。
+
+> **只改格式：** 使用 $unified-content-notes，只整理 Markdown 排版，不删字、不润色、不增加分析、不改变事件顺序。
+
+### Automatic selection
+
+You do not have to memorize the mode list. You can simply say:
+
+> 使用 $unified-content-notes，你先判断这份材料属于什么类型，再按最合适的方式高保真整理。
+
+The skill should infer the structure, avoid unnecessary clarification, and ask only when a missing detail would materially change the result.
+
 ## Default writing conventions
 
 - Preserve the **original title**. If no title is supplied, do not pretend a new one is original.
 - The highest heading level in generated Markdown is `##`; use `###` for subsections.
 - Indent Chinese prose paragraphs with **two full-width spaces** (`　　`). Do not indent tables, Markdown lists, headings, or quotes.
-- For long opinion-led material with cases, use a **claim / source case or evidence / reasoning / takeaway** table, followed by analytical prose that expands each important case. Do not turn an argument into a light-novel or storybook retelling. Stories remain narrative; format-only work gets no added analysis table.
+- For opinion-led material, keep the original title, add the source once, use a compact claim/evidence/reasoning table, then write a high-fidelity body in the source's logical order. Preserve the cases and reasoning needed to support each claim; remove repetition, not evidence. Do not turn it into a third-person video report or a fictionalized story.
 
 - Favor **high-fidelity compression** over extreme brevity: preserve independent claims, meaningful counterexamples, numbers, key dialogue, and turning points.
 - Avoid narrator-style commentary such as “the speaker says” when a clean standalone digest is requested.
@@ -72,29 +129,25 @@ Explicit instructions from the user take priority over these defaults.
 
 ## Opinion analysis and case-rich writing
 
-For argument-led material—especially relationship commentary with several real-life examples—the default is an **analytical article with evidence**, not a storybook or light-novel retelling.
+For argument-led material—especially relationship commentary with several real-life examples—the default is a **high-fidelity analytical article**, not a third-person video report and not a fictionalized story.
 
-The expected layout is:
+Use this natural sequence:
 
-1. Preserve the original title and add source metadata only when available.
-2. State the central idea directly in a short **Article thesis** section.
-3. Add a compact **claim / source case or evidence / reasoning / takeaway** table.
-4. Write the body as a structured analysis, using headings that express the argument (for example, “Why delayed communication creates uncertainty”), not literary scene titles.
-5. Expand every important case in the body: context, observable facts, key dialogue, response or outcome, and what the case supports.
-6. Compare cases when their differences help explain the argument.
-7. Close with the actual takeaway and any necessary limits.
+1. Preserve the original title.
+2. Add the source once beneath the title, only when known.
+3. Place a compact claim/evidence/reasoning table near the beginning. Keep it readable (normally no more than four columns).
+4. Continue with the body in the source's argument order. Use only the logical subheadings needed to make the reasoning easy to follow; do not force repeated template headings such as “Article thesis”, “Body summary”, or “Final takeaway”.
+5. Keep the original speaker's narrative perspective and emotional force. Do not mechanically convert every passage into first person or second person.
+6. Expand important cases in the body: context, what happened, key actions or dialogue, response, outcome, and why the case supports the claim. The table cannot replace this.
+7. Add a short boundary note only when a claim is overgeneralized, unsupported, or needs verification. Keep the user's own reflection separate and place it at the end when present.
 
-**Do not turn analytical material into a fictionalized narrative.** No invented atmosphere, inner monologue, gestures, suspense, or dialogue. Case detail is included to support reasoning, not to create a dramatic scene.
+**High-fidelity compression means removing repetition, not removing evidence.** There is no fixed word count or compression ratio. Preserve independent claims, meaningful examples, numbers, dialogue, analogies, counterexamples, and reasoning steps. If several cases support similar conclusions but contain different evidence, do not collapse them into one generic example.
 
-### Dialogue formatting
+Avoid narrator-style phrases such as “the author believes”, “the original text says”, “the speaker gives an example”, or “this article is about”. Write the claim or event directly. Attribution belongs in the source line unless distinguishing speakers or viewpoints is necessary.
 
-Original couple dialogue may be visually separated with speaker labels:
+Do not invent scene details, inner thoughts, gestures, dialogue, or outcomes. Do not turn argument-led material into a light novel or storybook. Conversely, do not reduce it to a bare list of claims: the body must retain enough evidence and explanation to stand on its own.
 
-> **Partner A:** I can understand that you will be late, but why didn't you tell me earlier?
->
-> **Partner B:** I thought I would finish soon, but it took longer than expected.
-
-Follow the exchange with analysis. For longer conversations, a compact comparison table may help distinguish the actual wording, observable concern, and possible effect. Keep original dialogue separate from any newly suggested rewrite.
+For visual quality, use coherent paragraphs, a restrained amount of bold text, a compact table, and a small number of meaningful subheadings. Avoid both a wall of text and a heading every few lines.
 
 See [the argument-analysis layout guide](references/argument-analysis-layout.md) and the [case-rich example](examples/argument-case-output.md).
 
