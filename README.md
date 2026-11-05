@@ -43,6 +43,7 @@ unified-content-notes/
 ├── modules/
 │   └── relationship-analysis.md
 ├── references/
+│   ├── obsidian-argument-layout.md
 │   ├── platform-and-source.md
 │   └── legacy compatibility notes (old reference paths)
 ├── examples/
@@ -53,7 +54,7 @@ unified-content-notes/
 
 - **Core rules** define common behavior once: action routing, source boundaries, Markdown style, and quality checks.
 - **Content modules** define how a type of material should be organized.
-- **Domain modules** add specialized analysis without copying their parent module. For example, relationship analysis extends the general argument-analysis module.
+- **Domain modules** add specialized analysis without copying their parent module. For example, relationship analysis extends the general argument-analysis module and adds behavior, needs, reciprocity, and relationship-boundary analysis, not a second writing template.
 - **Optional references** are loaded only when a platform-specific input structure matters.
 
 The entrypoint instructs compatible agents to load shared core rules, then only the content modules needed for the current task. A child module must be read together with its declared parent. This reduces duplicated instructions and avoids loading unrelated topic rules. Actual context savings depend on whether the agent supports reading referenced files on demand.
@@ -73,14 +74,36 @@ Do not copy only SKILL.md; the entrypoint references the supporting files.
 
 This is a **file-based prompt skill**, not a program or a ChatGPT plugin. Copying the repository does not automatically install it into a ChatGPT conversation or grant browsing, download, transcription, or OCR capabilities.
 
+### Obsidian layout and usage
+
+The **观点分析型** mode now uses the confirmed Obsidian reading structure by default when Obsidian is the target:
+
+1. One original `##` heading **per topic**; known creator/platform consolidated into one source line.
+2. `[!abstract]` claim/evidence/reasoning/conclusion table (usually four columns).
+3. `[!summary]` high-fidelity condensed body. Important cases must retain their background, actions, original dialogue/numbers, responses/outcomes, and logic; remove repetition, **not** evidence.
+4. Optional `[!tip]` personal insight and `[!note]` reasoning caveats; preserve source and author boundaries.
+5. `[!quote]-` collapsed **original text** (if provided). Reflow paragraphs with two full-width leading spaces while preserving wording; do not reconstruct material unavailable from the source.
+
+This is native Obsidian Markdown (no CSS snippets or plugins); Callout colors depend on the theme. For non-Obsidian environments use ordinary Markdown tables and labels without changing the information requirements. [Exact Callout syntax](references/obsidian-argument-layout.md).
+
+**What relationship analysis adds:** It does not create another layout. When the source is about intimate relationships, it supplements the same structure with two-party behavior, expectations, communication, reciprocity, timelines, and uncertainty; a pure conversation or a personal story without an argument can instead use dialogue/narrative routing. See [relationship analysis](modules/relationship-analysis.md).
+
+**Example prompts:**
+
+~~~text
+$unified-content-notes 文案 + 观点分析型。Obsidian 排版：每个话题一个标题，表格+完整浓缩正文+折叠原文，案例不要遗漏。
+$unified-content-notes 文案 + 情感观点分析。继承同样的 Obsidian 版式，额外分析双方行为、关系责任和边界，不要合并人物观点。
+$unified-content-notes 把原文和已有观点分析稿逐话题融合，来源只出现一次，保留原文文字，仅重新分段。
+~~~
+
 ## Choose a mode
 
 The skill routes by structure, not by website:
 
 | Prompt mode | Use it for | Typical output |
 | --- | --- | --- |
-| **文案 + 观点分析型** | Relationship commentary, workplace opinions, social observations, personal-growth arguments | Original title + compact claim/evidence/reasoning table when useful + analytical body |
-| **文案 + 情感观点分析** | Relationship, communication, attraction, marriage, boundaries, and interpersonal conflict | General argument structure plus analysis of observable behavior, dialogue, expectations, interaction, and boundaries |
+| **文案 + 观点分析型** | Relationship commentary, workplace opinions, social observations, personal-growth arguments | **Per-topic original title + claim/evidence/reasoning/conclusion table + case-rich condensed body + collapsible source when provided** |
+| **文案 + 情感观点分析** | Relationship, communication, attraction, marriage, boundaries, and interpersonal conflict | **Inherits the above full layout**, then examines both parties' actions, needs, interaction, responsibility, and uncertainty |
 | **文案 + 故事 / 经历型** | Real-life stories, relationship experiences, narrative posts | Event order, people, actions, key dialogue, emotional changes, and outcome |
 | **文案 + 情侣对话型** | Chat logs and conflict conversations | Speaker labels and readable dialogue; analysis or rewrite only when requested |
 | **文案 + 短文案 / 金句型** | Short quotes, captions, one-line opinions | Preserve original wording; group lightly when useful |
@@ -92,7 +115,7 @@ The skill routes by structure, not by website:
 
 ### Important distinction
 
-**情感观点分析 is not a second layout template.** It inherits the general argument-analysis structure and adds relationship-specific lenses. The original title, source line, optional claim/evidence table, case expansion, and general quality rules remain defined only once in core/argument-analysis.md.
+**情感观点分析 is not a second layout template.** It inherits the general argument-analysis structure and adds relationship-specific lenses. The title, required argument table, case-rich condensed narrative, folded original (when provided), and quality rules remain defined once in core/argument-analysis.md. Domain modules do not replace the core output layout.
 
 ## Copy-and-use prompts
 
@@ -112,9 +135,9 @@ Natural language works too. The prefix is useful where the skill loader supports
 - Preserve the original title. If no title is supplied, do not pretend a new one is original.
 - The highest heading level in generated notes is ##; use ### for subsections.
 - Indent Chinese prose paragraphs with **two full-width spaces** (　　). Do not indent tables, Markdown lists, headings, or quotes.
-- For argument-led material, use a compact table when it improves navigation; keep the body complete and case-rich.
+- For the **argument-analysis mode**, always include a claim/evidence/reasoning/conclusion table and a fully readable condensed narrative with concrete cases; when original material is available, include it in a collapsible Obsidian Callout.
 - Favor high-fidelity compression: remove repetition, not evidence.
-- Keep the source's narrative perspective and emotional force; avoid unnecessary narrator-style commentary.
+- Keep the source's narrative perspective, concrete cases, and emotional force; avoid unnecessary narrator-style commentary. Each topic gets one ## heading; use Obsidian Callout labels, not subheadings, for the table, summary, notes and folded original.
 - Never silently change wording in format-only mode.
 - Distinguish verifiable facts, creator claims, quotations, user notes, and model-added interpretation.
 
