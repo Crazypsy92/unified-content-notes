@@ -110,7 +110,6 @@ The `examples/` directory contains **newly written demonstration sources and out
 | [Documentary input](examples/documentary-input.md) → [explanation](examples/documentary-explanation.md) | Separates observation, expert statement, a resident's personal experience, plans, and missing evidence |
 | [Carousel input](examples/carousel-input.md) → [summary](examples/carousel-summary.md) | Preserves card order, numeric examples, author additions, and reader comments as separate sources |
 | [Format input](examples/format-input.md) → [format-only](examples/format-only.md) | Keeps every non-layout character unchanged |
-| [Relationship argument input](examples/relationship-argument-input.md) → [analysis summary](examples/relationship-argument-summary.md) | Maps claims to cases, expands evidence in analytical prose, and formats dialogue without novel-style narration |
 
 Examples illustrate output *behaviors*, not mandatory templates. See the [examples guide](examples/README.md) for the full input/output matrix and how to reproduce comparisons.
 
