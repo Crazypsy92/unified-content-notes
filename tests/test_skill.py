@@ -134,6 +134,17 @@ class SkillPackageTests(unittest.TestCase):
             with self.subTest(item=item):
                 self.assertIn(item.lower(), guide.lower())
 
+    def test_all_local_markdown_links_resolve(self):
+        for file in ROOT.rglob("*.md"):
+            content = file.read_text(encoding="utf-8")
+            targets = re.findall(r"\]\(([^)]+\.md)(?:#[^)]*)?\)", content)
+            for target in targets:
+                if target.startswith(("http://", "https://")):
+                    continue
+                resolved = (file.parent / target).resolve()
+                with self.subTest(file=file.relative_to(ROOT), target=target):
+                    self.assertTrue(resolved.is_file())
+
     def test_repository_metadata(self):
         for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):
             with self.subTest(file=name):
