@@ -64,7 +64,7 @@ The entrypoint instructs compatible agents to load shared core rules, then only 
 1. Download or clone this repository.
 2. Copy the **entire repository folder** to your skills directory, for example:
    - Linux/macOS/WSL: ~/.agents/skills/unified-content-notes/
-   - Windows: %USERPROFILE%\\.agents\\skills\\unified-content-notes\\
+   - Windows: %USERPROFILE%\.agents\skills\unified-content-notes\
 3. Verify that the folder contains SKILL.md, core/, modules/, and references/.
 4. Start a new Codex session if your client needs to refresh available skills.
 
