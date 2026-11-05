@@ -43,7 +43,8 @@ unified-content-notes/
 ├── modules/
 │   └── relationship-analysis.md
 ├── references/
-│   └── platform-and-source.md
+│   ├── platform-and-source.md
+│   └── legacy compatibility notes (old reference paths)
 ├── examples/
 └── tests/
 ~~~
