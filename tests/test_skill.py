@@ -153,6 +153,114 @@ class SkillPackageTests(unittest.TestCase):
                 with self.subTest(file=file.relative_to(ROOT), target=target):
                     self.assertTrue(resolved.is_file())
 
+    def test_argument_mode_defaults_to_full_obsidian_contract(self):
+        argument = read("core/argument-analysis.md")
+        style = read("core/markdown-style.md")
+        entrypoint = read("SKILL.md")
+        for required in (
+            "一个 ##", "观点速览", "具体案例", "浓缩正文", "折叠原文",
+            "论点", "论据", "论证", "完整原文"
+        ):
+            with self.subTest(requirement=required):
+                self.assertIn(required, argument)
+        self.assertIn("references/obsidian-argument-layout.md", entrypoint)
+        self.assertIn("观点分析型每个话题仅一个", style)
+
+    def test_relationship_extends_argument_instead_of_replacing_format(self):
+        module = read("modules/relationship-analysis.md")
+        for phrase in ("适用范围", "继承基础模块", "双方", "责任", "不再另造一套模板"):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, module)
+        self.assertIn("../core/argument-analysis.md", module)
+        self.assertIn("纯故事 / 对话", module)
+        self.assertIn("只改格式", module)
+
+    def test_obsidian_layout_uses_native_renderable_callouts(self):
+        layout = read("references/obsidian-argument-layout.md")
+        for tag in ("[!info]", "[!abstract]", "[!summary]", "[!note]", "[!quote]-"):
+            with self.subTest(tag=tag):
+                self.assertIn(tag, layout)
+        self.assertIn("> 　　", layout)
+        self.assertIn("一个话题一个标题", layout)
+
+    @staticmethod
+    def _normalized_original(text):
+        return "".join(char for char in text if not char.isspace())
+
+    @staticmethod
+    def _folded_original(output):
+        marker = "> [!quote]- 原文记录 · 点击展开"
+        if marker not in output:
+            raise AssertionError("Missing folded source")
+        folded = output.split(marker, 1)[1]
+        folded = folded.split("\n---\n", 1)[0]
+        lines = []
+        for line in folded.strip("\n").splitlines():
+            if line.startswith("> "):
+                lines.append(line[2:])
+            elif line == ">":
+                lines.append("")
+            elif not line.strip():
+                lines.append("")
+            else:
+                raise AssertionError(f"Invalid Callout quote line: {line!r}")
+        return "\n".join(lines)
+
+    def test_canonical_argument_examples_have_complete_layout(self):
+        pairs = (
+            ("examples/obsidian-argument-input.md", "examples/obsidian-argument-output.md"),
+            ("examples/argument-case-input.md", "examples/argument-case-output.md"),
+            ("examples/relationship-argument-input.md", "examples/relationship-argument-summary.md"),
+        )
+        for source_path, output_path in pairs:
+            with self.subTest(output=output_path):
+                source = read(source_path)
+                output = read(output_path)
+                self.assertEqual(len(re.findall(r"(?m)^## ", output)), 1)
+                self.assertNotRegex(output, r"(?m)^### ")
+                for marker in ("> [!abstract] 观点速览",
+                               "> [!summary] 浓缩正文",
+                               "> [!quote]- 原文记录 · 点击展开"):
+                    self.assertIn(marker, output)
+                self.assertIn("> 　　", output)
+                # A native Obsidian Callout table is part of the evidence structure.
+                table_start = output.index("> [!abstract] 观点速览")
+                table_end = output.index("> [!summary] 浓缩正文")
+                table_lines = [line for line in output[table_start:table_end].splitlines()
+                               if line.startswith("> |")]
+                self.assertGreaterEqual(len(table_lines), 3)
+                self.assertEqual(len(set(line.count("|") for line in table_lines)), 1)
+
+                # The source's original ## heading and its consolidated source
+                # attribution do not reappear in the folded text; all actual
+                # prose/metadata other than the source label must survive.
+                original_lines = source.splitlines()[1:]
+                original_lines = [
+                    line for line in original_lines if not line.startswith("来源：")
+                ]
+                expected = self._normalized_original("\n".join(original_lines))
+                actual = self._normalized_original(self._folded_original(output))
+                self.assertEqual(expected, actual)
+
+    def test_condensed_body_keeps_unique_case_evidence(self):
+        cases = (
+            ("examples/obsidian-argument-output.md",
+             ("小李", "周一", "两项", "小周", "已完成4项", "待验证2项", "阻塞4项")),
+            ("examples/argument-case-output.md",
+             ("项目上线", "半夜", "女朋友", "纪念日", "周末", "改期")),
+            ("examples/relationship-argument-summary.md",
+             ("在线", "甲", "乙", "告诉我一声", "临时加班", "改期")),
+        )
+        for path, expected_fragments in cases:
+            out = read(path)
+            body = out.split("> [!summary] 浓缩正文", 1)[1]
+            body = body.split("\n> [!note]", 1)[0].split("\n> [!quote]-", 1)[0]
+            with self.subTest(example=path):
+                self.assertGreater(len(body), 200)
+                for fragment in expected_fragments:
+                    with self.subTest(fragment=fragment):
+                        self.assertIn(fragment, body)
+
     def test_repository_metadata(self):
         for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):
             with self.subTest(file=name):
