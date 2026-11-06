@@ -12,7 +12,7 @@ The template is not an active configuration. The skill loads `user-preferences.m
 
 ## Scope and priority
 
-The preference layer may customize presentation defaults, including language, target format, heading depth, indentation, compression density, source display, highlighting, and tone.
+The preference layer may customize presentation defaults only, including language, target format, heading depth, indentation, compression density, source display, highlighting, and tone.
 
 It does not define content-analysis logic and cannot override:
 
