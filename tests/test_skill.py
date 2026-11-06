@@ -185,6 +185,9 @@ class SkillPackageTests(unittest.TestCase):
 
     @staticmethod
     def _normalized_original(text):
+        # Semantic spans are visual wrappers; their inner source text must survive.
+        text = re.sub(r"<span\b[^>]*>", "", text)
+        text = text.replace("</span>", "")
         return "".join(char for char in text if not char.isspace())
 
     @staticmethod
@@ -282,6 +285,51 @@ class SkillPackageTests(unittest.TestCase):
         self.assertIn("var(--color-orange)", layout)
         self.assertIn("语义高亮", style)
         self.assertIn("不使用硬编码色值", style)
+        self.assertIn("argument-analysis", readme)
+        self.assertIn("观点分析型", quality)
+
+    def test_semantic_highlights_cover_both_body_and_original(self):
+        pairs = (
+            ("examples/obsidian-argument-input.md", "examples/obsidian-argument-output.md"),
+            ("examples/argument-case-input.md", "examples/argument-case-output.md"),
+            ("examples/relationship-argument-input.md", "examples/relationship-argument-summary.md"),
+        )
+        allowed = {"cyan", "green", "orange"}
+        for source_path, output_path in pairs:
+            source = read(source_path)
+            output = read(output_path)
+            body_start = output.index("> [!summary] 浓缩正文")
+            body_end_candidates = [
+                pos for marker in ("\n> [!note]", "\n> [!quote]-")
+                if (pos := output.find(marker, body_start + 1)) >= 0
+            ]
+            body = output[body_start:min(body_end_candidates) if body_end_candidates else len(output)]
+            original = self._folded_original(output)
+            for region_name, region in (("condensed body", body), ("folded original", original)):
+                tags = re.findall(r'<span style="color: var\(--color-(cyan|green|orange)\); font-weight: 600;">', region)
+                with self.subTest(example=output_path, region=region_name):
+                    self.assertGreaterEqual(len(tags), 3)
+                    self.assertEqual(set(tags), allowed)
+                    self.assertEqual(len(re.findall(r"<span\b", region)), region.count("</span>"))
+                    for tag in re.findall(r"<span\b[^>]*>", region):
+                        self.assertRegex(tag, r'^<span style="color: var\(--color-(?:cyan|green|orange)\); font-weight: 600;">
+
+    def test_repository_metadata(self):
+        for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):
+            with self.subTest(file=name):
+                self.assertTrue((ROOT / name).is_file())
+
+
+if __name__ == "__main__":
+    unittest.main()
+)
+            original_lines = source.splitlines()[1:]
+            original_lines = [line for line in original_lines if not line.startswith("来源：")]
+            self.assertEqual(
+                self._normalized_original("\n".join(original_lines)),
+                self._normalized_original(original),
+            )
+        self.assertNotIn("<span", read("examples/format-only.md"))
 
     def test_repository_metadata(self):
         for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):

@@ -88,7 +88,7 @@ This uses native Obsidian Callouts and theme variables; no external CSS snippets
 
 #### Semantic highlighting
 
-For Obsidian summarize / explain outputs, semantic highlighting is applied to **both the condensed body and the folded original text**:
+For Obsidian **argument-analysis** summarize / explain outputs, semantic highlighting is applied to **both the condensed body and the folded original text**:
 
 - **Cyan:** complete core claims, key judgments, and conclusions.
 - **Green:** concrete cases, evidence, facts, numbers, and meaningful actions.
