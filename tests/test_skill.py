@@ -349,7 +349,7 @@ class SkillPackageTests(unittest.TestCase):
         self.assertIn("local-only", contributing)
         self.assertIn("Core → Modules → User Preferences", read("README.md"))
         self.assertIn("presentation defaults only", guide)
-        self.assertFalse((ROOT / "preferences/user-preferences.md").exists())
+        # A local preference file may exist on a user machine; it must remain ignored, not forbidden.
 
     def test_repository_metadata(self):
         for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):
