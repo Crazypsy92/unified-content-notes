@@ -261,6 +261,28 @@ class SkillPackageTests(unittest.TestCase):
                     with self.subTest(fragment=fragment):
                         self.assertIn(fragment, body)
 
+    def test_obsidian_semantic_highlighting_contract(self):
+        argument = read("core/argument-analysis.md")
+        layout = read("references/obsidian-argument-layout.md")
+        style = read("core/markdown-style.md")
+        quality = read("core/quality-check.md")
+        readme = read("README.md")
+        for phrase in (
+            "浓缩正文和折叠原文",
+            "蓝青色",
+            "绿色",
+            "橙色",
+            "孤立名词",
+            "format-only",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, argument + layout + quality + readme)
+        self.assertIn("var(--color-cyan)", layout)
+        self.assertIn("var(--color-green)", layout)
+        self.assertIn("var(--color-orange)", layout)
+        self.assertIn("语义高亮", style)
+        self.assertIn("不使用硬编码色值", style)
+
     def test_repository_metadata(self):
         for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):
             with self.subTest(file=name):
