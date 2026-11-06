@@ -32,6 +32,7 @@ unified-content-notes/
 │   ├── action-router.md
 │   ├── structure-router.md
 │   ├── source-boundaries.md
+│   ├── transcript-cleanup.md
 │   ├── markdown-style.md
 │   ├── quality-check.md
 │   ├── argument-analysis.md
@@ -112,7 +113,7 @@ python tests/check_obsidian_callouts.py your_output.md
 python tests/check_obsidian_callouts.py your_output.md --simplified
 ~~~
 
-整理正文默认简体，原始转录默认不动。只有用户明确要求原文也简体时，才输出标注「原文转录 · 简体阅读版」的副本，并保存未转换备份；转换后不应再声称与原文逐字一致，也不能借机猜改 ASR。
+原始 ASR 默认保留，不把繁简转换、标点补充或段落重排说成逐字原文。若用户明确要求“校订口播 / 修正 ASR / 让原文可读”，读取 core/transcript-cleanup.md，输出折叠的「口播转录 · 断句校订版」：补标点、按语义分段、只改高置信度错词；无法确认的词句用“听辨存疑”标记。没有音频时必须注明“基于 ASR 文本校订，未核听音频”。原始 ASR 另存备份。
 
 #### Semantic highlighting
 
@@ -122,9 +123,18 @@ For Obsidian **argument-analysis** summarize / explain outputs, semantic highlig
 - **Green:** concrete cases, evidence, facts, numbers, and meaningful actions.
 - **Orange:** reasoning turns, contrasts, counterexamples, qualifications, and risks.
 
-Highlight meaningful phrases or complete clauses—not isolated nouns or random keywords. By default, original wording and order must remain unchanged: removing added <span> tags must recover the supplied source text. For an explicitly requested simplified reading copy, compare against the simplified-conversion reference and archive the unconverted original. A single legend near the beginning of a long document is enough. Format-only mode does not add semantic highlights unless explicitly requested. The spans use Obsidian theme variables such as var(--color-cyan), not hard-coded colors.
+Highlight meaningful phrases or complete clauses—not isolated nouns or random keywords. For a verbatim original, removing added <span> tags must recover the supplied source text. For an explicitly requested ASR reading edition, removing spans must recover the corrected reading text, while the untouched ASR source is retained separately. A single legend near the beginning of a long document is enough. Format-only mode does not add semantic highlights unless explicitly requested. The spans use Obsidian theme variables such as var(--color-cyan), not hard-coded colors.
 
 **What relationship analysis adds:** It does not create another layout. When the source is about intimate relationships, it supplements the same structure with two-party behavior, expectations, communication, reciprocity, timelines, and uncertainty; a pure conversation or a personal story without an argument can instead use dialogue/narrative routing. See [relationship analysis](modules/relationship-analysis.md).
+
+#### ASR transcript cleanup
+
+When a spoken transcript arrives as one long, punctuation-free block, the skill can create a readable transcript edition without pretending to have verified the audio:
+
+- Keep the raw ASR transcript untouched as a separate backup.
+- Add punctuation and split paragraphs around complete ideas, examples, numbered points, transitions, and conclusions.
+- Correct only high-confidence recognition errors; mark uncertain names, numbers, phrases, and cut-off endings instead of guessing.
+- Label the result as a corrected reading edition, not a verbatim transcript. If no audio is available, state that the cleanup is text-based and has not been audio-checked.
 
 **Example prompts:**
 
@@ -132,6 +142,7 @@ Highlight meaningful phrases or complete clauses—not isolated nouns or random 
 $unified-content-notes 文案 + 观点分析型。Obsidian 排版：每个话题一个标题，表格+完整浓缩正文+折叠原文，案例不要遗漏。
 $unified-content-notes 文案 + 情感观点分析。继承同样的 Obsidian 版式，额外分析双方行为、关系责任和边界，不要合并人物观点。
 $unified-content-notes 把原文和已有观点分析稿逐话题融合，来源只出现一次，保留原文文字，仅重新分段。
+$unified-content-notes 这是 ASR 口播，帮我校订原文：补标点、按语义分段、修正高置信错词；不确定处标记存疑，保留未处理 ASR 备份。
 ~~~
 
 ## Choose a mode
