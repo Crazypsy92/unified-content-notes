@@ -9,7 +9,7 @@ It separates two decisions:
 - **Action:** what the user wants done — summarize, explain, or format only.
 - **Content structure:** how the material is organized — argument, narrative, dialogue, documentary, method, short copy, image carousel, or a mixture.
 
-The skill uses a small entrypoint, shared core rules, and optional domain modules. It is one skill, not a separate prompt for every platform or topic.
+The skill uses a small entrypoint, shared core rules, optional domain modules, and a private user-preference overlay. It is one skill, not a separate prompt for every platform or topic.
 
 > The skill instructions and default written output are in Chinese. This README is in English for easier public sharing. Users can request another output language or formatting style explicitly.
 
@@ -42,6 +42,9 @@ unified-content-notes/
 │   └── format-only.md
 ├── modules/
 │   └── relationship-analysis.md
+├── preferences/
+│   ├── README.md
+│   └── user-preferences.template.md
 ├── references/
 │   ├── obsidian-argument-layout.md
 │   ├── platform-and-source.md
@@ -55,9 +58,10 @@ unified-content-notes/
 - **Core rules** define common behavior once: action routing, source boundaries, Markdown style, and quality checks.
 - **Content modules** define how a type of material should be organized.
 - **Domain modules** add specialized analysis without copying their parent module. For example, relationship analysis extends the general argument-analysis module and adds behavior, needs, reciprocity, and relationship-boundary analysis, not a second writing template.
+- **User preferences** are an optional third layer for presentation choices such as language, heading depth, paragraph indentation, density, and tone. The repository publishes a neutral template; a filled `preferences/user-preferences.md` is local-only and ignored by Git.
 - **Optional references** are loaded only when a platform-specific input structure matters.
 
-The entrypoint instructs compatible agents to load shared core rules, then only the content modules needed for the current task. A child module must be read together with its declared parent. This reduces duplicated instructions and avoids loading unrelated topic rules. Actual context savings depend on whether the agent supports reading referenced files on demand.
+The three working layers are **Core → Modules → User Preferences**. Load shared core rules first, then only the content/domain modules needed for the task, and finally apply a local preference file if one exists. A child module must be read together with its declared parent. Preferences affect presentation defaults only; they cannot invent source facts, weaken source-integrity rules, or silently change a format-only task. The current task's explicit instructions take priority over saved preferences. Actual context savings depend on whether the agent supports reading referenced files on demand.
 
 ## Quick start
 
@@ -67,14 +71,26 @@ The entrypoint instructs compatible agents to load shared core rules, then only 
 2. Copy the **entire repository folder** to your skills directory, for example:
    - Linux/macOS/WSL: ~/.agents/skills/unified-content-notes/
    - Windows: %USERPROFILE%\.agents\skills\unified-content-notes\
-3. Verify that the folder contains SKILL.md, core/, modules/, and references/.
+3. Verify that the folder contains SKILL.md, core/, modules/, preferences/, and references/.
 4. Start a new Codex session if your client needs to refresh available skills.
+5. Optional: copy `preferences/user-preferences.template.md` to `preferences/user-preferences.md` and edit it for your own writing preferences. This local file is ignored by Git and should not be committed.
 
-Do not copy only SKILL.md; the entrypoint references the supporting files.
+Do not copy only SKILL.md; the entrypoint references the supporting files. The preference template is inactive until you create the local `user-preferences.md` file.
 
 This is a **file-based prompt skill**, not a program or a ChatGPT plugin. Copying the repository does not automatically install it into a ChatGPT conversation or grant browsing, download, transcription, or OCR capabilities.
 
-### Obsidian layout and usage
+#### User preference layer
+
+The optional third layer is for **your own presentation defaults**, not a second set of content-analysis rules:
+
+1. Copy `preferences/user-preferences.template.md` to `preferences/user-preferences.md`.
+2. Fill only the preferences that are useful to you; leave the rest at their defaults.
+3. The skill reads this file only when it exists. The template itself is documentation, not an active configuration.
+4. `preferences/user-preferences.md` is ignored by Git so personal settings are not accidentally published.
+
+The preference layer may set output language, target format, heading depth, paragraph indentation, compression density, source-retention preference, highlighting preference, and tone. It cannot override source integrity, copyright boundaries, the requested action, or format-only protection. A specific instruction in the current request overrides a saved preference.
+
+## Obsidian layout and usage
 
 The **观点分析型** mode now uses the confirmed Obsidian reading structure by default when Obsidian is the target:
 

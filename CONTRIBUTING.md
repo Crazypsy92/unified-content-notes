@@ -19,6 +19,7 @@ The platform is an input source, not an action or content genre.
 - SKILL.md is the entrypoint. Keep it concise and focused on routing, loading rules, and universal constraints.
 - core/ contains shared rules and reusable content structures. Define each common rule once.
 - modules/ contains domain-specific extensions. A module must state its parent (if any), its loading condition, and only the additional rules it contributes.
+- preferences/ contains a neutral preference template and instructions. A user's filled user-preferences.md is local-only and must not be committed.
 - references/ contains optional source/platform references and compatibility notes; it should not duplicate canonical rules.
 - examples/ contains original or rights-cleared input/output pairs.
 - tests/ contains dependency-free structural and behavior checks.
@@ -30,7 +31,9 @@ The platform is an input source, not an action or content genre.
 3. Do not copy common formatting, source-integrity, or quality rules into every module.
 4. Load only the modules relevant to the current task; do not load every topic module by default.
 5. A domain module may refine its domain-specific lens, but it cannot weaken source integrity or format-only protection.
-6. Do not create a new module for every platform or every keyword. Add a module only when it contains genuinely reusable rules that cannot fit cleanly in an existing core structure.
+6. User preferences are loaded only when a local preferences/user-preferences.md exists; the public template is not active by itself.
+7. Preferences may customize presentation defaults only. They cannot override source integrity, copyright boundaries, the current task's explicit instructions, or format-only protection.
+8. Do not create a new module for every platform or every keyword. Add a module only when it contains genuinely reusable rules that cannot fit cleanly in an existing core structure.
 
 ## Ways to contribute
 
@@ -38,6 +41,7 @@ The platform is an input source, not an action or content genre.
 - **Add a test case:** contribute an original or rights-cleared input/output pair in examples/.
 - **Improve a shared rule:** update the smallest relevant file in core/.
 - **Improve a domain-specific rule:** update the relevant file in modules/.
+- **Adjust a user's defaults:** edit a local copy of preferences/user-preferences.template.md; do not commit personal preference files.
 - **Improve source guidance:** update references/ only when the guidance is optional or platform-specific.
 - **Improve documentation or validation:** update the README, contribution guide, or offline tests.
 
@@ -78,7 +82,8 @@ Prefer original demonstration content. Do not submit credentials, personal infor
 - Preserve source titles, use ## as the highest generated-note heading, and indent Chinese prose paragraphs with two ideographic spaces.
 - Do not force tables on short stories or format-only work.
 - Keep the three actions distinct and content modules structure-aware.
-- Keep common rules in core files and domain-only rules in modules.
+- Keep common rules in core files, domain-only rules in modules, and personal presentation defaults in the optional preferences layer.
+- Do not commit preferences/user-preferences.md; it may contain personal settings.
 - Do not promise browsing, downloading, transcription, OCR, or full-work access that the active assistant does not have.
 - Distinguish source claims, user annotations, and external interpretation.
 
@@ -87,6 +92,7 @@ Prefer original demonstration content. Do not submit credentials, personal infor
 - [ ] The change addresses a concrete scenario.
 - [ ] The action and content structure remain distinct.
 - [ ] Any specialized module declares its parent and loading condition.
+- [ ] User preferences are optional, local-only, and cannot weaken invariants.
 - [ ] Common rules are not duplicated across modules.
 - [ ] Only relevant modules are loaded for a task.
 - [ ] New examples are original, licensed, or redistributable.

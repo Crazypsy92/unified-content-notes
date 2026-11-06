@@ -331,6 +331,26 @@ class SkillPackageTests(unittest.TestCase):
             )
         self.assertNotIn("<span", read("examples/format-only.md"))
 
+    def test_user_preference_layer_is_optional_and_local(self):
+        entrypoint = read("SKILL.md")
+        guide = read("preferences/README.md")
+        template = read("preferences/user-preferences.template.md")
+        contributing = read("CONTRIBUTING.md")
+        ignore = read(".gitignore")
+        self.assertIn("preferences/user-preferences.md", entrypoint)
+        self.assertIn("template", entrypoint)
+        self.assertIn("only when that file exists", guide)
+        self.assertIn("cannot override", guide)
+        self.assertIn("Output language", template)
+        self.assertIn("Summary density", template)
+        self.assertIn("Semantic highlighting", template)
+        self.assertIn("current request", template.lower())
+        self.assertIn("preferences/user-preferences.md", ignore)
+        self.assertIn("local-only", contributing)
+        self.assertIn("Core → Modules → User Preferences", read("README.md"))
+        self.assertIn("presentation defaults only", guide)
+        self.assertFalse((ROOT / "preferences/user-preferences.md").exists())
+
     def test_repository_metadata(self):
         for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):
             with self.subTest(file=name):
