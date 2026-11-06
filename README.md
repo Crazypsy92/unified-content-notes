@@ -102,6 +102,18 @@ The **观点分析型** mode now uses the confirmed Obsidian reading structure b
 
 This uses native Obsidian Callouts and theme variables; no external CSS snippets or plugins are required. For non-Obsidian environments use ordinary Markdown tables and labels without changing the information requirements. [Exact Callout and highlighting syntax](references/obsidian-argument-layout.md).
 
+#### Obsidian Callout troubleshooting and simplified originals
+
+独立 Callout 之间务必保留**真正的空白源码行**，而不是单独的 `>` 行。后者仍属于前一张卡片，可能导致 `[!note]`、`[!quote]-` 在阅读视图中直接显示。运行：
+
+~~~bash
+python tests/check_obsidian_callouts.py your_output.md
+# 可选（需安装 opencc-python-reimplemented）：
+python tests/check_obsidian_callouts.py your_output.md --simplified
+~~~
+
+整理正文默认简体，原始转录默认不动。只有用户明确要求原文也简体时，才输出标注「原文转录 · 简体阅读版」的副本，并保存未转换备份；转换后不应再声称与原文逐字一致，也不能借机猜改 ASR。
+
 #### Semantic highlighting
 
 For Obsidian **argument-analysis** summarize / explain outputs, semantic highlighting is applied to **both the condensed body and the folded original text**:
@@ -110,7 +122,7 @@ For Obsidian **argument-analysis** summarize / explain outputs, semantic highlig
 - **Green:** concrete cases, evidence, facts, numbers, and meaningful actions.
 - **Orange:** reasoning turns, contrasts, counterexamples, qualifications, and risks.
 
-Highlight meaningful phrases or complete clauses—not isolated nouns or random keywords. The original wording and order must remain unchanged: removing the added <span> tags must recover the supplied source text. A single legend near the beginning of a long document is enough. Format-only mode does not add semantic highlights unless explicitly requested. The spans use Obsidian theme variables such as var(--color-cyan), not hard-coded colors.
+Highlight meaningful phrases or complete clauses—not isolated nouns or random keywords. By default, original wording and order must remain unchanged: removing added <span> tags must recover the supplied source text. For an explicitly requested simplified reading copy, compare against the simplified-conversion reference and archive the unconverted original. A single legend near the beginning of a long document is enough. Format-only mode does not add semantic highlights unless explicitly requested. The spans use Obsidian theme variables such as var(--color-cyan), not hard-coded colors.
 
 **What relationship analysis adds:** It does not create another layout. When the source is about intimate relationships, it supplements the same structure with two-party behavior, expectations, communication, reciprocity, timelines, and uncertainty; a pure conversation or a personal story without an argument can instead use dialogue/narrative routing. See [relationship analysis](modules/relationship-analysis.md).
 
