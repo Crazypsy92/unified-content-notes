@@ -307,23 +307,22 @@ class SkillPackageTests(unittest.TestCase):
             body = output[body_start:min(body_end_candidates) if body_end_candidates else len(output)]
             original = self._folded_original(output)
             for region_name, region in (("condensed body", body), ("folded original", original)):
-                tags = re.findall(r'<span style="color: var\(--color-(cyan|green|orange)\); font-weight: 600;">', region)
+                tags = re.findall(
+                    r'<span style="color: var\(--color-(cyan|green|orange)\); font-weight: 600;">',
+                    region,
+                )
                 with self.subTest(example=output_path, region=region_name):
                     self.assertGreaterEqual(len(tags), 3)
                     self.assertEqual(set(tags), allowed)
-                    self.assertEqual(len(re.findall(r"<span\b", region)), region.count("</span>"))
+                    self.assertEqual(
+                        len(re.findall(r"<span\b", region)),
+                        region.count("</span>"),
+                    )
                     for tag in re.findall(r"<span\b[^>]*>", region):
-                        self.assertRegex(tag, r'^<span style="color: var\(--color-(?:cyan|green|orange)\); font-weight: 600;">
-
-    def test_repository_metadata(self):
-        for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):
-            with self.subTest(file=name):
-                self.assertTrue((ROOT / name).is_file())
-
-
-if __name__ == "__main__":
-    unittest.main()
-)
+                        self.assertRegex(
+                            tag,
+                            r'^<span style="color: var\(--color-(?:cyan|green|orange)\); font-weight: 600;">$',
+                        )
             original_lines = source.splitlines()[1:]
             original_lines = [line for line in original_lines if not line.startswith("来源：")]
             self.assertEqual(
