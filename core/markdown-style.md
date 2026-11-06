@@ -13,7 +13,7 @@
 ## Obsidian 原生样式
 
 - 用户计划在 Obsidian 阅读观点分析型稿件时，默认使用 Obsidian 原生 Callout，而不是把所有内容裸放在页面上。具体标签、折叠、表格和引用的**唯一语法说明**见 [Obsidian 观点分析排版](../references/obsidian-argument-layout.md)。
-- 不需要额外插件、CSS snippets、HTML 表格、内联 CSS，也不凭空指定主题色值；Callout 颜色由 Obsidian 主题决定。
+- 不需要额外插件、CSS snippets 或 HTML 表格。允许仅为语义高亮使用内联 <span>，颜色通过 Obsidian 主题变量（如 var(--color-cyan)）指定；不使用硬编码色值、自定义 CSS 或随机换色。Callout 本身的颜色由 Obsidian 主题决定。
 - 不要把整段长原文默认展开：使用折叠原文，优先展示观点表格和浓缩正文。
 - Obsidian Callout 内的 Markdown 表格，**每行需以 > 开头**，表头后要有合法的分隔行，每列的 | 数量一致，块之间留空行。
 - Markdown 源码模式会显示标记；实时预览 / 阅读视图可显示渲染效果。
