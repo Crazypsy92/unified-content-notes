@@ -12,7 +12,7 @@ The **current default** for argument-analysis mode is **one topic heading, compa
 | --- | --- | --- |
 | [General opinion input](obsidian-argument-input.md) | [Obsidian argument output](obsidian-argument-output.md) | Table plus complete cases, semantic highlights in body and original, source restored after removing spans |
 | [Relationship argument input](relationship-argument-input.md) | [Relationship Obsidian output](relationship-argument-summary.md) | Same base layout and semantic highlighting plus relationship-specific interpretation, no independent relationship layout |
-| [Case-rich argument input](argument-case-input.md) | [Case-rich Obsidian output](argument-case-output.md) | Dialogue, two distinct cases, and folded original kept separately |
+| [Case-rich argument input](argument-case-input.md) | [Case-rich Obsidian output](argument-case-output.md) | Dialogue, two distinct cases, semantic highlights in body and original, source restoration |
 
 The prior narrative, documentary, carousel, and format-only examples keep their own structures and **do not inherit** the Obsidian argument layout unless explicitly requested.
 

@@ -185,10 +185,11 @@ class SkillPackageTests(unittest.TestCase):
 
     @staticmethod
     def _normalized_original(text):
-        # Semantic spans are visual wrappers; their inner source text must survive.
+        # Remove visual spans and paragraph-edge indentation, but preserve
+        # meaningful spaces inside the original lines.
         text = re.sub(r"<span\b[^>]*>", "", text)
         text = text.replace("</span>", "")
-        return "".join(char for char in text if not char.isspace())
+        return "".join(line.strip(" \t\u3000\r") for line in text.splitlines())
 
     @staticmethod
     def _folded_original(output):
