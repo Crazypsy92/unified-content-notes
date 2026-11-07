@@ -221,6 +221,9 @@ The skill has no runtime dependencies. Run the offline checks with Python 3.9+:
 
 ~~~bash
 python3 -m unittest discover -s tests -v
+
+# Validate a generated technical knowledge note
+python3 tests/check_technical_notes.py path/to/note.md
 ~~~
 
 See CONTRIBUTING.md for the module design and contribution rules.
