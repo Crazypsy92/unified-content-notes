@@ -2,7 +2,6 @@
 """Validate heading depth, sparse Callouts, and Obsidian MathJax in technical notes."""
 from __future__ import annotations
 import argparse
-import math
 import re
 from pathlib import Path
 import sys
@@ -31,21 +30,31 @@ def validate(path: Path) -> list[str]:
     for n, h in question_heads:
         if not re.match(r"^###\s+\d+[.、]", h):
             errors.append(f"line {n}: level-3 heading is not a numbered question: {h}")
+
     callout_count = sum(1 for line in lines if re.match(r"^> \[![a-z]", line))
-    q_count = len(question_heads)
-    max_callouts = max(1, math.ceil(q_count / 5))
+    question_count = len(question_heads)
+    max_callouts = question_count // 5
     if callout_count > max_callouts:
-        errors.append(f"too many Callouts: {callout_count} for {q_count} questions (limit {max_callouts})")
+        errors.append(
+            f"too many Callouts: {callout_count} for {question_count} questions "
+            f"(maximum 20% = {max_callouts})"
+        )
+
     visible = "\n".join(lines)
-    if any(token in visible for token in (r"\[", r"\]", r"\(", r"\)")):
-        errors.append("found bracket/parenthesis math delimiters; use Obsidian $...$ / $$...$$")
-    block_count = visible.count("$$")
+    # Inline code is literal text, not a rendered formula.
+    tick = chr(96)
+    inline_pattern = tick + r"+[^" + tick + r"]*" + tick + r"+"
+    math_text = re.sub(inline_pattern, "", visible)
+    if any(token in math_text for token in (r"\[", r"\(")):
+        errors.append("found LaTeX bracket/parenthesis delimiters; use Obsidian $...$ / $$...$$")
+    block_count = math_text.count("$$")
     if block_count % 2:
         errors.append(f"unbalanced block MathJax delimiters: {block_count} $$ tokens")
-    inline_text = visible.replace("$$", "")
+    inline_text = math_text.replace("$$", "")
     inline_dollars = len(re.findall(r"(?<!\\)\$", inline_text))
     if inline_dollars % 2:
         errors.append(f"unbalanced inline MathJax delimiters: {inline_dollars} $ tokens")
+
     if re.search(r"<span\b|\bstyle\s*=|cssclasses\s*:", source, re.I):
         errors.append("found CSS/HTML styling; technical notes should use native Markdown and sparse Callouts")
     if not question_heads:
