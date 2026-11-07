@@ -33,6 +33,7 @@ unified-content-notes/
 │   ├── structure-router.md
 │   ├── source-boundaries.md
 │   ├── transcript-cleanup.md
+│   ├── technical-knowledge-notes.md
 │   ├── markdown-style.md
 │   ├── quality-check.md
 │   ├── argument-analysis.md
@@ -48,6 +49,7 @@ unified-content-notes/
 │   └── user-preferences.template.md
 ├── references/
 │   ├── obsidian-argument-layout.md
+│   ├── obsidian-technical-notes.md
 │   ├── platform-and-source.md
 │   └── legacy compatibility notes (old reference paths)
 ├── examples/
@@ -222,3 +224,16 @@ python3 -m unittest discover -s tests -v
 ~~~
 
 See CONTRIBUTING.md for the module design and contribution rules.
+
+
+### Technical interview knowledge notes
+
+For embedded systems, RTOS, MCU, hardware fundamentals, communication, storage, and control interview notes, load `core/technical-knowledge-notes.md`. This is a separate route from documentary / factual knowledge summaries.
+
+The Obsidian layout uses one question heading per topic:
+
+- `# Document title`
+- `## Chapter`
+- `### Original question`
+
+No lower-level headings are generated inside a question. Use ordinary paragraphs, bold lead-ins, lists, and comparison tables. Callouts are sparse (normally at most one per chapter and no more than 20% of question count), not one colored card per question. Obsidian formulas use MathJax delimiters `$...$` and `$$...$$`. No CSS or HTML is required. See [the technical Obsidian layout](references/obsidian-technical-notes.md).
