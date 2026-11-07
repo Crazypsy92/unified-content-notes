@@ -44,57 +44,9 @@ description: 中文多平台内容整理统一入口。适用于用户提供或�
 
 **观点分析型的默认交付契约：** 用户采用 Obsidian 时，一个话题一个 `##` 标题，固定包含**观点速览表格（论点、具体论据、推理、落点）+ 论据不遗漏的浓缩正文**；已有完整原文时再附带**默认折叠的原文记录**；若用户要求修订 ASR，则明确标注为校订阅读版并保留原始备份。浓缩正文与折叠文本均按语义角色进行克制高亮；来源合并标注一次，正文案例保留背景、行为、关键对话 / 数字、回应 / 结果。具体颜色、语义判断和原文保真规则见 [Obsidian 观点分析排版与语义高亮](references/obsidian-argument-layout.md)。只改格式模式不自动添加语义高亮，除非用户明确要求。
 
-**本地 Obsidian 验收补充：** 独立 Callout（尤其 summary → note → quote）必须使用真正空白行分隔；`>` / `> ` 属于上一引用块，不能作为分隔。交付前运行 `python tests/check_obsidian_callouts.py file.md`，检查卡片边界及高亮 HTML 是否闭合；技术知识笔记另运行 `python tests/check_technical_notes.py file.md`，检查标题层级、Callout 密度和 MathJax 分隔符；有条件时在 Obsidian 阅读视图核对。整理正文默认为简体。原始 ASR 默认保留；用户明确要求校订口播时，加载 core/transcript-cleanup.md，将折叠区标为「口播转录 · 断句校订版」，另存未处理 ASR 备份，并标注是否核听音频。不得把校订阅读版冒充逐字原文，也不得用标题或相似话题猜补缺失内容。
+**本地 Obsidian 验收补充：** 独立 Callout（尤其 summary → note → quote）必须使用真正空白行分隔；`>` / `> ` 属于上一引用块，不能作为分隔。交付前运行 `python tests/check_obsidian_callouts.py file.md` 检查 Callout 边界；技术知识笔记另运行 `python tests/check_technical_notes.py file.md` 检查标题层级、Callout 密度和 MathJax 分隔符。有条件时在 Obsidian 阅读视图核对。整理正文默认为简体。原始 ASR 默认保留；用户明确要求校订口播时，加载 core/transcript-cleanup.md，将折叠区标为「口播转录 · 断句校订版」，另存未处理 ASR 备份，并标注是否核听音频。不得把校订阅读版冒充逐字原文，也不得用标题或相似话题猜补缺失内容。
 
-**技术知识笔记的默认交付契约：** 嵌入式 / RTOS / MCU / 硬件基础等面试知识库，按“章节标题 + 每题一个题目标题”组织；每道题只保留一个 `###` 标题，不再建立 `####` 等内部标题。正文以普通段落、加粗短语、列表和表格为主；Callout 只用于少量真正重要的跨题提醒或风险，不按知识点逐题套色块。Obsidian 公式统一使用 `$...---
-name: unified-content-notes
-description: 中文多平台内容整理统一入口。适用于用户提供或明确指定可访问的抖音、B站、小红书、X、播客、文章、PDF、截图、字幕、小说、电影、纪录片、教程、对话或个人经历，并要求总结、浓缩、提炼观点、讲解、剧情梳理或只改 Markdown 格式；也适用于嵌入式、RTOS、MCU、硬件基础等技术面试知识库整理。先识别处理动作，再识别内容结构；按需加载通用分析规范与专项模块。默认高保真整理，保留独立论点、证据、案例、关键对话、数字、公式、比喻、转折和推理；不虚构素材中没有的事实。严格执行只改格式的零语义改写要求。
----
-
-## 定位
-
-**一个 Skill、三个处理动作、按内容结构组合模块。** 平台只是素材来源，不决定文章体裁；情感、职场、社会观察等是领域语境，不应各自复制一套通用排版规则。
-
-目标是把用户实际提供或当前确实可访问的素材，整理成真实、可检索、条理清晰、值得回看的中文 Markdown。不要把摘要变成无依据的再创作，也不要把所有材料压进同一种模板。
-
-## 必须执行的加载协议
-
-每次处理任务，先读取以下通用核心文件：
-
-1. [动作路由](core/action-router.md)
-2. [内容结构路由](core/structure-router.md)
-3. [来源与材料边界](core/source-boundaries.md)
-4. [Markdown 默认规范](core/markdown-style.md)
-5. [质量检查](core/quality-check.md)
-
-再根据素材选择**必要的内容模块**，不要把所有模块一次性加载：
-
-| 素材结构 / 任务 | 加载文件 |
-| --- | --- |
-| 观点、评论、论证、长篇文案 | [通用观点分析](core/argument-analysis.md)；Obsidian 输出再加载 [观点分析排版与语义高亮](references/obsidian-argument-layout.md) |
-| 恋爱、亲密关系、沟通、婚姻等观点材料 | 先加载通用观点分析；Obsidian 阅读再加载观点分析型排版；最后叠加 [情感观点分析](modules/relationship-analysis.md) |
-| 小说、电影、真人经历、故事、人物弧线 | [叙事分析](core/narrative-analysis.md) |
-| 纪录片、科普、历史调查、知识解释 | [知识与纪实分析](core/knowledge-analysis.md) |
-| 多轮聊天、情侣对话、访谈问答 | [对话分析](core/dialogue-analysis.md) |
-| 教程、方法、经验、操作流程 | [方法与经验笔记](core/method-notes.md) |
-| 明确要求只排版、不改写 | [只改格式规则](core/format-only.md) |
-| ASR 口播需要纠错、断句或阅读整理 | [ASR 口播校订](core/transcript-cleanup.md) |
-| 嵌入式、RTOS、MCU、硬件基础等技术面试知识库 | [技术知识笔记](core/technical-knowledge-notes.md)；Obsidian 排版再加载 [技术笔记排版](references/obsidian-technical-notes.md) |
-| 平台图卡、帖子线程、分 P 或多来源合集 | 需要时再读取 [平台输入参考](references/platform-and-source.md) |
-
-**继承协议：** 专项模块必须先加载其声明的基础模块。情感观点分析继承通用观点分析，只增加关系领域的分析要求，不重新定义标题、表格、案例展开和通用质量规则。继承是本 Skill 的文件加载与规则组合约定，不代表运行环境具有程序语言式的类继承功能。
-
-**用户偏好层（可选）：** 如果存在 `preferences/user-preferences.md`，在读取核心规则和本次需要的模块后再读取它；不要把 `preferences/user-preferences.template.md` 当作已启用的偏好。该文件只控制语言、版式、浓缩密度、原文呈现和语气等默认呈现选择，不得覆盖来源真实性、版权边界、当前任务的明确要求或只改格式保护。当前任务要求优先于已保存偏好；未创建个人配置时不追问，直接使用本 Skill 的默认规则。
-
-**ASR 校订加载：** 当用户明确要求整理口播原文、修正 ASR 错词、补标点或重新分段时，加载 [ASR 口播校订](core/transcript-cleanup.md)。该模块区分原始 ASR 备份与校订阅读版；没有音频时不得声称已核听。纯 format-only 仍不加载校订规则，也不得自动纠错。
-
-**按需组合：** 一份材料可以同时包含观点、对话、故事、方法和技术知识。只加载真正需要的模块，并按材料各部分分别应用；不要为了分类而拆出多份重复成品。只改格式是保护模式，默认不加载总结或讲解模块。
-
-**观点分析型的默认交付契约：** 用户采用 Obsidian 时，一个话题一个 `##` 标题，固定包含**观点速览表格（论点、具体论据、推理、落点）+ 论据不遗漏的浓缩正文**；已有完整原文时再附带**默认折叠的原文记录**；若用户要求修订 ASR，则明确标注为校订阅读版并保留原始备份。浓缩正文与折叠文本均按语义角色进行克制高亮；来源合并标注一次，正文案例保留背景、行为、关键对话 / 数字、回应 / 结果。具体颜色、语义判断和原文保真规则见 [Obsidian 观点分析排版与语义高亮](references/obsidian-argument-layout.md)。只改格式模式不自动添加语义高亮，除非用户明确要求。
-
-**本地 Obsidian 验收补充：** 独立 Callout（尤其 summary → note → quote）必须使用真正空白行分隔；`>` / `> ` 属于上一引用块，不能作为分隔。交付前运行 `python tests/check_obsidian_callouts.py file.md`，检查卡片边界及高亮 HTML 是否闭合；有条件时在 Obsidian 阅读视图核对。整理正文默认为简体。原始 ASR 默认保留；用户明确要求校订口播时，加载 core/transcript-cleanup.md，将折叠区标为「口播转录 · 断句校订版」，另存未处理 ASR 备份，并标注是否核听音频。不得把校订阅读版冒充逐字原文，也不得用标题或相似话题猜补缺失内容。
-
- 行内和 `$...$` 块级 MathJax。具体规则见 [技术知识笔记](core/technical-knowledge-notes.md) 与 [Obsidian 技术笔记排版](references/obsidian-technical-notes.md)。
+**技术知识笔记的默认交付契约：** 嵌入式 / RTOS / MCU / 硬件基础等面试知识库，按“章节标题 + 每题一个题目标题”组织；每道题只保留一个 `###` 标题，不再建立 `####` 等内部标题。正文以普通段落、加粗短语、列表和表格为主；Callout 只用于少量真正重要的跨题提醒或风险，不按知识点逐题套色块。Obsidian 公式统一使用 `$...$` 行内和 `$$...$$` 块级 MathJax。具体规则见 [技术知识笔记](core/technical-knowledge-notes.md) 与 [Obsidian 技术笔记排版](references/obsidian-technical-notes.md)。
 
 **情感专项的边界：** 恋爱 / 择偶 / 婚姻 / 关系冲突等观点先执行通用观点分析，再额外分析双方行为、需求、互动、责任与关系边界；专项只增加分析深度，不重新定义表格、浓缩正文或折叠原文。纯故事 / 对话、只改格式等依主任务路由，不机械套情感观点表。
 
