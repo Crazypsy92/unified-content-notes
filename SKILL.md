@@ -65,7 +65,7 @@ description: 中文多平台内容整理统一入口。适用于用户提供或�
 - $unified-content-notes 总结这份文案，自动判断内容类型，按高保真浓缩处理。
 - $unified-content-notes 文案 + 观点分析型，保留论点、论据和案例。
 - $unified-content-notes 文案 + 情感观点分析，结合双方行为、对话和关系变化分析。
-$unified-content-notes 整理嵌入式 / RTOS 面试知识点：每题一个标题，不要内部小标题；正文优先普通段落和表格，少量 Callout；公式使用 Obsidian MathJax。
+- $unified-content-notes 整理嵌入式 / RTOS 面试知识点：每题一个标题，不要内部小标题；正文优先普通段落和表格，少量 Callout；公式使用 Obsidian MathJax。
 - $unified-content-notes 讲解这部作品，区分剧情事实与人物解读。
 - $unified-content-notes 只改 Markdown 排版，一个字也不要改。
 
