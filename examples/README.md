@@ -14,6 +14,8 @@ The **current default** for argument-analysis mode is **one topic heading, compa
 | [Relationship argument input](relationship-argument-input.md) | [Relationship Obsidian output](relationship-argument-summary.md) | Same base layout and semantic highlighting plus relationship-specific interpretation, no independent relationship layout |
 | [Case-rich argument input](argument-case-input.md) | [Case-rich Obsidian output](argument-case-output.md) | Dialogue, two distinct cases, semantic highlights in body and original, source restoration |
 
+The novel example is an original demonstration of the optional novel-analysis module. It is intentionally more expansive than the short-story example: the plot recap carries the emotional progression, while the final scene collection uses original paraphrase rather than long source quotations.
+
 The prior narrative, documentary, carousel, and format-only examples keep their own structures and **do not inherit** the Obsidian argument layout unless explicitly requested.
 
 ## Compare actions on the same source
@@ -24,6 +26,7 @@ The prior narrative, documentary, carousel, and format-only examples keep their 
 | Explain the same opinion piece | [argument-input.md](argument-input.md) | [argument-explanation.md](argument-explanation.md) | Answers *why* rather than simply shortening; labels its interpretation |
 | **Analyze an opinion piece with multiple relationship cases** | [argument-case-input.md](argument-case-input.md) | [argument-case-output.md](argument-case-output.md) | Uses a claim/evidence/reasoning table, expands each case in analytical prose, and formats dialogue clearly without turning the piece into a story |
 | Summarize a short story | [narrative-input.md](narrative-input.md) | [narrative-summary.md](narrative-summary.md) | Keeps character motivation, event sequence and the final reveal |
+| Deep-read a novel | [novel-input.md](novel-input.md) | [novel-summary.md](novel-summary.md) | Expands the plot into scene-rich prose, tracks a relationship arc, and puts emotionally meaningful scene replays at the end |
 | Explain the same story | [narrative-input.md](narrative-input.md) | [narrative-explanation.md](narrative-explanation.md) | Grounds an interpretation in specific actions instead of adding an invented backstory |
 | Format without rewriting | [format-input.md](format-input.md) | [format-only.md](format-only.md) | Preserves every non-layout character while improving reading rhythm |
 

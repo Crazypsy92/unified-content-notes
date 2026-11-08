@@ -351,6 +351,48 @@ class SkillPackageTests(unittest.TestCase):
         self.assertIn("presentation defaults only", guide)
         # A local preference file may exist on a user machine; it must remain ignored, not forbidden.
 
+    def test_novel_module_extends_narrative_with_deep_reading_rules(self):
+        module = read("modules/novel-analysis.md")
+        entrypoint = read("SKILL.md")
+        router = read("core/structure-router.md")
+        for phrase in (
+            "core/narrative-analysis.md",
+            "35%—50%",
+            "人物处境",
+            "行动",
+            "后果",
+            "情绪变化",
+            "值得回看的动人情节片段",
+            "3—8",
+            "原创转述",
+            "不超过 25 个词",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, module)
+        self.assertIn("modules/novel-analysis.md", entrypoint)
+        self.assertIn("modules/novel-analysis.md", router)
+
+    def test_novel_example_has_narrative_density_and_final_scene_collection(self):
+        source = read("examples/novel-input.md")
+        output = read("examples/novel-summary.md")
+        self.assertIn("台风", source)
+        self.assertGreater(len(output), 1800)
+        self.assertIn("## 故事梗概", output)
+        self.assertIn("## 人物与关系", output)
+        self.assertIn("## 值得回看的动人情节片段", output)
+        headings = re.findall(r"(?m)^## .+$", output)
+        self.assertEqual(headings[-1], "## 值得回看的动人情节片段")
+        self.assertGreaterEqual(len(re.findall(r"(?m)^\\*\\*片段[一二三四五六七八九十]+", output)), 3)
+        for phrase in ("红围巾", "台风夜", "送他回家", "灯塔"):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, output)
+
+    def test_novel_route_is_distinct_from_general_narrative_route(self):
+        router = read("core/structure-router.md")
+        self.assertIn("小说深度阅读型", router)
+        self.assertIn("一般故事 / 经历 / 影视作品型", router)
+        self.assertIn("narrative-analysis.md", router)
+
     def test_repository_metadata(self):
         for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore"):
             with self.subTest(file=name):

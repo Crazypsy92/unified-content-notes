@@ -43,7 +43,8 @@ unified-content-notes/
 │   ├── method-notes.md
 │   └── format-only.md
 ├── modules/
-│   └── relationship-analysis.md
+│   ├── relationship-analysis.md
+│   └── novel-analysis.md
 ├── preferences/
 │   ├── README.md
 │   └── user-preferences.template.md
@@ -60,7 +61,7 @@ unified-content-notes/
 
 - **Core rules** define common behavior once: action routing, source boundaries, Markdown style, and quality checks.
 - **Content modules** define how a type of material should be organized.
-- **Domain modules** add specialized analysis without copying their parent module. For example, relationship analysis extends the general argument-analysis module and adds behavior, needs, reciprocity, and relationship-boundary analysis, not a second writing template.
+- **Domain modules** add specialized analysis without copying their parent module. Relationship analysis extends argument analysis; the novel module extends narrative analysis with richer plot retelling, character arcs, literary commentary, and a final collection of memorable scenes.
 - **User preferences** are an optional third layer for presentation choices such as language, heading depth, paragraph indentation, density, and tone. The repository publishes a neutral template; a filled `preferences/user-preferences.md` is local-only and ignored by Git.
 - **Optional references** are loaded only when a platform-specific input structure matters.
 
@@ -160,7 +161,8 @@ The skill routes by structure, not by website:
 | **文案 + 短文案 / 金句型** | Short quotes, captions, one-line opinions | Preserve original wording; group lightly when useful |
 | **文案 + 方法 / 经验型** | Advice, communication methods, practical lessons, tutorials | Goal, principles, steps, examples, conditions, and limitations |
 | **文案 + 个人感悟型** | First-person reflections and journals | Preserve first-person voice, uncertainty, and personal judgment |
-| **作品 + 剧情 / 人物解读型** | Film, novel, documentary, or character analysis | Source facts and character actions first; interpretation grounded in evidence |
+| **小说深度阅读型** | Full-length novels and complete literary works | A scene-rich plot recap, character arcs, themes, author / critic context, and memorable scenes at the end |
+| **作品 + 剧情 / 人物解读型** | Film, documentary, short story, or character analysis | Source facts and character actions first; interpretation grounded in evidence |
 | **图文 + 多页卡片型** | Carousels, screenshots, slide-like posts | Preserve page order, text, numbers, and relationships |
 | **混合型 / 自动判断** | Sources containing arguments, cases, dialogue, and practical advice | Route each section according to its actual structure |
 
@@ -181,12 +183,17 @@ $unified-content-notes 只改这篇小故事的 Markdown 排版，一个字也�
 
 Natural language works too. The prefix is useful where the skill loader supports explicit invocation.
 
+## Novel deep-reading mode
+
+For a full novel reading note, load `modules/novel-analysis.md` after `core/narrative-analysis.md`. The plot recap is the narrative center of the note, not a short synopsis: for a complete full-length novel it will usually occupy about 35–50% of the output and retain the characters' situations, choices, consequences, and emotional changes. The module also adds source-grounded character and literary analysis, author interviews / criticism when requested or available, and a final section with 3–8 memorable scene replays written in original paraphrase. It does not reproduce long copyrighted passages or invent scenes and dialogue. The default delivery is one Markdown file per novel, with a simple heading structure and no unnecessary folder hierarchy.
+
 ## Default writing conventions
 
 - Preserve the original title. If no title is supplied, do not pretend a new one is original.
 - The highest heading level in generated notes is ##; use ### for subsections.
 - Indent Chinese prose paragraphs with **two full-width spaces** (　　). Do not indent tables, Markdown lists, headings, or quotes.
 - For the **argument-analysis mode**, always include a claim/evidence/reasoning/conclusion table and a fully readable condensed narrative with concrete cases; when original material is available, include it in a collapsible Obsidian Callout.
+- For **novel deep-reading mode**, expand the plot recap into a readable narrative, then ground character and literary interpretation in specific scenes; place the memorable-scene collection at the very end.
 - Favor high-fidelity compression: remove repetition, not evidence.
 - Keep the source's narrative perspective, concrete cases, and emotional force; avoid unnecessary narrator-style commentary. Each topic gets one ## heading; use Obsidian Callout labels, not subheadings, for the table, summary, notes and folded original.
 - Never silently change wording in format-only mode.
@@ -203,6 +210,7 @@ The examples/ directory contains original demonstration sources and outputs. Exa
 | [Argument input](examples/argument-input.md) → [summary](examples/argument-summary.md) / [explanation](examples/argument-explanation.md) | Same source, two actions; retains numeric details and separates analysis from source claims |
 | [Case-rich argument input](examples/argument-case-input.md) → [analysis output](examples/argument-case-output.md) | Claim/evidence/reasoning table, analytical case expansion, and readable dialogue |
 | [Narrative input](examples/narrative-input.md) → [summary](examples/narrative-summary.md) / [explanation](examples/narrative-explanation.md) | Event order, character motivation, reveal, and unresolved ending |
+| [Novel input](examples/novel-input.md) → [deep-reading note](examples/novel-summary.md) | Rich narrative recap, relationship changes, and a final selection of emotionally meaningful scenes |
 | [Documentary input](examples/documentary-input.md) → [explanation](examples/documentary-explanation.md) | Observation, interview statements, hypotheses, and missing evidence |
 | [Carousel input](examples/carousel-input.md) → [summary](examples/carousel-summary.md) | Card order, numbers, and source boundaries |
 | [Format input](examples/format-input.md) → [format-only](examples/format-only.md) | Preservation of non-layout characters |

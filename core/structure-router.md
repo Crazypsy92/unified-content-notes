@@ -6,7 +6,8 @@
 | --- | --- | --- | --- |
 | **观点 / 论证型** | 主张、理由、证据、类比、反问、反例、结论 | 每话题原始标题 + 默认论点/具体证据/推理表 + 事例完整的浓缩正文 + 有原文时折叠保留 | [argument-analysis.md](argument-analysis.md) |
 | **情感关系观点型** | 恋爱、婚姻、沟通、择偶、关系冲突、亲密互动 | 沿用观点分析基础结构，额外分析双方行为、互动和关系边界 | 先加载通用观点分析，再加载 [relationship-analysis.md](../modules/relationship-analysis.md) |
-| **故事 / 经历 / 作品型** | 人物、处境、目标、冲突、行动、转折、结果 | 按事件与人物变化组织，保留关键对话和结局 | [narrative-analysis.md](narrative-analysis.md) |
+| **小说深度阅读型** | 长篇小说、完整小说、用户要求精读 / 完整剧情 / 人物命运 / 文学评论 | 以有感染力的连贯叙事梳理故事；深入分析人物弧线、关系、主题与文学表达；末尾收藏动人情节 | 先加载 [narrative-analysis.md](narrative-analysis.md)，再加载 [小说深度阅读](../modules/novel-analysis.md) |
+| **一般故事 / 经历 / 影视作品型** | 电影、剧集、真人经历、短篇故事、人物弧线 | 按事件与人物变化组织，保留关键对话、转折和结局 | [narrative-analysis.md](narrative-analysis.md) |
 | **知识 / 纪实型** | 事实、记录、访谈、证据、时间线、机制、争议 | 区分观察、记录、陈述、推断和计划；组织证据链 | [knowledge-analysis.md](knowledge-analysis.md) |
 | **技术知识 / 技术八股型** | 嵌入式、单片机 / MCU、RTOS、驱动、通信、LVGL / HMI、汽车电子、工业控制、机器人、ROS 2、机器视觉、具身智能，以及其他工程与计算机技术面试题 | 按技术领域和知识层级归类；每个问题一个标题；提供可口述回答、原理机制、实现边界、可信案例与常见追问 | [technical-knowledge-notes.md](technical-knowledge-notes.md) |
 | **对话 / 访谈型** | 多轮发言、误会、追问、回应、观点交锋 | 标记说话人和轮次；按需分析表达、需求与回应 | [dialogue-analysis.md](dialogue-analysis.md) |
