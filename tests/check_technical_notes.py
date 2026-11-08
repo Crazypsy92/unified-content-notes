@@ -69,10 +69,20 @@ def validate(path: Path) -> list[str]:
             prop = piece.split(":", 1)[0].strip().lower()
             if prop not in {"color", "background-color", "font-weight", "border-radius", "padding"}:
                 errors.append("unsupported inline highlight CSS property: " + prop)
-        color = re.search(r"(?:^|;)\s*color:\s*var\(--color-(cyan|green|orange)\)", style, re.I)
-        background = re.search(r"background-color:\s*color-mix\(in srgb,\s*var\(--color-(cyan|green|orange)\)", style, re.I)
-        if not color or not background or color.group(1).lower() != background.group(1).lower():
-            errors.append("highlight must pair the semantic text color with a matching soft background")
+        # Colored backgrounds are the default; text is normally var(--text-normal).
+        # Reserve colored text for a small set of high-priority interview anchors.
+        color = re.search(
+            r"(?:^|;)\s*color:\s*var\(--(text-normal|color-(?:cyan|green|orange|purple|red))\)",
+            style, re.I,
+        )
+        background = re.search(
+            r"background-color:\s*color-mix\(in srgb,\s*var\(--color-(cyan|green|orange|purple|red)\)\s+\d+%,\s*(?:transparent|var\(--background-primary\))\)",
+            style, re.I,
+        )
+        if not color or not background:
+            errors.append("highlight requires a theme-aware colored background and text color")
+        elif color.group(1).lower() != "text-normal" and color.group(1).lower() != "color-" + background.group(1).lower():
+            errors.append("colored foreground must match its semantic background")
         if not re.search(r"background-color:\s*var\(--text-highlight-bg\)", style, re.I):
             errors.append("highlight must provide the Obsidian theme background fallback")
         if re.search(r"#[0-9a-f]{3,8}\b|(?:rgb|hsl)a?\s*\(|url\s*\(|expression\s*\(", style, re.I):
