@@ -65,12 +65,12 @@ Callout 只用于少量真正重要的信息：
 - 全篇 Callout 不超过题目数的 20%。
 - 仅用于关键安全风险、跨题总结或必须单独提醒的边界。
 - 不连续堆叠色块，不把每个例子和表格装进背景框。
-- 不使用外部 CSS snippets 或硬编码色值；**仅关键技术文字允许受控的内联 `<span>` 同时设置主题色文字与浅背景**。Callout 仍使用 Obsidian 原生主题颜色，标准写法见下文。
+- 不使用外部 CSS snippets 或硬编码色值；**仅关键技术文字允许受控的内联 `<span>` 设置多色浅背景，绝大多数文字保持主题正常颜色，只有少数关键结论额外强调字色**。Callout 仍使用 Obsidian 原生主题颜色，标准写法见下文。
 
 
 ## 技术重点的文字背景高亮
 
-**默认启用主题色文字 + 浅背景**，借鉴情感观点文案的语义高亮，但不让整道题成为色块。优先突出可复述的关键句；普通段落、表格、代码与公式保持清爽。**完整知识库以重要知识单元覆盖为准，不使用每题 1～3 处的限制**。每题逐一检查概念定义、原理机制、关键分类、技术对比、案例用途、风险边界、追问答案，信息多则多标；短题仍可只标一句，**不要求每题凑满三色**。对比表的正文单元格内允许高亮关键纯文本，但不要整行、整表染色。
+**默认启用多色浅背景 + 正常文字色，少量核心结论才使用彩色加粗字**，借鉴情感观点文案的语义高亮，但不让整道题成为色块。优先突出可复述的关键句；普通段落、表格、代码与公式保持清爽。**完整知识库以重要知识单元覆盖为准，不使用每题 1～3 处的限制**。每题逐一检查概念定义、原理机制、关键分类、技术对比、案例用途、风险边界、追问答案，信息多则多标；短题仍可只标一句，**不要求每题凑满三色**。对比表的正文单元格内允许高亮关键纯文本，但不要整行、整表染色。
 
 | 语义色 | 内容 | 高亮判断 |
 | --- | --- | --- |
@@ -78,14 +78,14 @@ Callout 只用于少量真正重要的信息：
 | 绿色 | 工程案例、可验证现象、数据及事实证据 | 有来源和验证级别的具体依据 |
 | 橙色 | 常见误区、版本差异、技术取舍和工程风险 | 决定结论适用范围的限定条件 |
 
-**Obsidian HTML 写法：** 仅使用 Obsidian 主题变量。`--text-highlight-bg` 是回退背景；当阅读器支持 `color-mix()` 时，后一项使用与文字同色的半透明背景，适应深浅主题。内联样式不需要用户自行安装 CSS snippets。
+**Obsidian HTML 写法：** 仅使用 Obsidian 主题变量。`--text-highlight-bg` 作为回退背景；支持 `color-mix()` 时，采用不同主题色与 `--background-primary` 混合成蓝青、绿色和橙色浅背景，适应明暗主题。**所有背景高亮默认 `color: var(--text-normal)`，只有每题最重要的核心回答/面试速记选择匹配语义的主题强调文字色**。内联样式不需要安装 CSS snippets。
 
 ~~~markdown
-<span style="color: var(--color-cyan); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-cyan) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">可直接口述的核心结论</span>
+<span style="color: var(--color-cyan); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-cyan) 16%, var(--background-primary)); font-weight: 700; border-radius: 3px; padding: 0 0.15em;">可直接口述的核心结论</span>
 
-<span style="color: var(--color-green); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-green) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">有依据的工程场景或可验证现象</span>
+<span style="color: var(--text-normal); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-green) 26%, var(--background-primary)); font-weight: inherit; border-radius: 3px; padding: 0 0.15em;">有依据的工程场景或可验证现象</span>
 
-<span style="color: var(--color-orange); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-orange) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">技术风险、适用限制和常见误区</span>
+<span style="color: var(--text-normal); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-orange) 26%, var(--background-primary)); font-weight: inherit; border-radius: 3px; padding: 0 0.15em;">技术风险、适用限制和常见误区</span>
 ~~~
 
 **一题示例：**
@@ -97,16 +97,16 @@ Callout 只用于少量真正重要的信息：
 
 ### 1. DMA 为什么能减轻 CPU 负担？
 
-**核心回答：** <span style="color: var(--color-cyan); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-cyan) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">DMA 配置完成后可在外设与存储器之间搬运数据，CPU 不必逐字节执行搬运指令。</span> CPU 仍负责初始化、事件处理和后续业务逻辑。
+**核心回答：** <span style="color: var(--color-cyan); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-cyan) 16%, var(--background-primary)); font-weight: 700; border-radius: 3px; padding: 0 0.15em;">DMA 配置完成后可在外设与存储器之间搬运数据，CPU 不必逐字节执行搬运指令。</span> CPU 仍负责初始化、事件处理和后续业务逻辑。
 
 **工作原理：** CPU 设置传输方向、地址与长度，DMA 控制器在请求条件满足时使用系统总线传输。
 
-**工程案例（典型场景）：** <span style="color: var(--color-green); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-green) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">串口接收结合 DMA 和缓冲区，可以减少 CPU 对逐字节数据搬运的参与。</span> 此处仅为教学示例，未声称硬件实测。
+**工程案例（典型场景）：** <span style="color: var(--text-normal); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-green) 26%, var(--background-primary)); font-weight: inherit; border-radius: 3px; padding: 0 0.15em;">串口接收结合 DMA 和缓冲区，可以减少 CPU 对逐字节数据搬运的参与。</span> 此处仅为教学示例，未声称硬件实测。
 
-**易错点：** <span style="color: var(--color-orange); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-orange) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">DMA 并非没有总线开销，也不意味着 CPU 完全不处理接收流程。</span>
+**易错点：** <span style="color: var(--text-normal); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-orange) 26%, var(--background-primary)); font-weight: inherit; border-radius: 3px; padding: 0 0.15em;">DMA 并非没有总线开销，也不意味着 CPU 完全不处理接收流程。</span>
 ~~~
 
-**兼容与边界：** 上述效果应在 Obsidian 的阅读视图或实时预览中查看；源码模式显示标签属于正常现象。若环境过滤内联样式，可用 Obsidian 原生 `==重点==` 实现单色背景；再不支持时降级为 `**加粗**`。不要使用硬编码色值、CSS snippets、整段背景或嵌套标签；不要把 `<span>` 包在公式、代码、整张表格、标题或链接中。可在表格正文单元格内包裹纯文字，必须保留 `|` 分隔符并验收表格渲染。只改格式任务除非明确授权，否则不新增高亮。
+**兼容与边界：** 普通知识点应始终保持正常字色，只突出少量核心回答与面试速记；上述效果应在 Obsidian 的阅读视图或实时预览中查看；源码模式显示标签属于正常现象。若环境过滤内联样式，可用 Obsidian 原生 `==重点==` 实现单色背景；再不支持时降级为 `**加粗**`。不要使用硬编码色值、CSS snippets、整段背景或嵌套标签；不要把 `<span>` 包在公式、代码、整张表格、标题或链接中。可在表格正文单元格内包裹纯文字，必须保留 `|` 分隔符并验收表格渲染。只改格式任务除非明确授权，否则不新增高亮。
 
 ## 表格、代码与流程图
 
