@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate heading depth, sparse Callouts, and Obsidian MathJax in technical notes."""
+"""Validate headings, sparse Callouts, theme-aware highlights, and Obsidian MathJax."""
 from __future__ import annotations
 import argparse
 import re
@@ -55,8 +55,32 @@ def validate(path: Path) -> list[str]:
     if inline_dollars % 2:
         errors.append(f"unbalanced inline MathJax delimiters: {inline_dollars} $ tokens")
 
-    if re.search(r"<span\b|\bstyle\s*=|cssclasses\s*:", source, re.I):
-        errors.append("found CSS/HTML styling; technical notes should use native Markdown and sparse Callouts")
+    # Allow semantic text/background spans, but forbid arbitrary styling.
+    if re.search(r"cssclasses\s*:|<style\b|<script\b", source, re.I):
+        errors.append("found CSS or script styling; only semantic inline highlights are supported")
+    span_pattern = re.compile(r'<span\s+style="([^"]+)">([^<>]+)</span>', re.I | re.S)
+    for match in span_pattern.finditer(visible):
+        style = match.group(1)
+        pieces = [piece.strip() for piece in style.split(";") if piece.strip()]
+        for piece in pieces:
+            if ":" not in piece:
+                errors.append("malformed inline highlight style")
+                continue
+            prop = piece.split(":", 1)[0].strip().lower()
+            if prop not in {"color", "background-color", "font-weight", "border-radius", "padding"}:
+                errors.append("unsupported inline highlight CSS property: " + prop)
+        color = re.search(r"(?:^|;)\s*color:\s*var\(--color-(cyan|green|orange)\)", style, re.I)
+        background = re.search(r"background-color:\s*color-mix\(in srgb,\s*var\(--color-(cyan|green|orange)\)", style, re.I)
+        if not color or not background or color.group(1).lower() != background.group(1).lower():
+            errors.append("highlight must pair the semantic text color with a matching soft background")
+        if not re.search(r"background-color:\s*var\(--text-highlight-bg\)", style, re.I):
+            errors.append("highlight must provide the Obsidian theme background fallback")
+        if re.search(r"#[0-9a-f]{3,8}\b|(?:rgb|hsl)a?\s*\(|url\s*\(|expression\s*\(", style, re.I):
+            errors.append("highlight contains hard-coded colors or unsafe CSS")
+    # Consume recognized spans and flag dangling/unapproved HTML styles.
+    leftover = span_pattern.sub("", visible)
+    if re.search(r"<span\b|</span\s*>|\bstyle\s*=", leftover, re.I):
+        errors.append("malformed or unauthorized inline styling")
     if not question_heads:
         errors.append("no numbered question headings found")
     return errors
@@ -77,7 +101,7 @@ def main() -> int:
                 print(f"FAIL {path}: {error}", file=sys.stderr)
             failed = True
         else:
-            print(f"PASS {path}: headings / Callout density / MathJax")
+            print(f"PASS {path}: headings / Callout density / semantic highlights / MathJax")
     return 1 if failed else 0
 
 if __name__ == "__main__":
