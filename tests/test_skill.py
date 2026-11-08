@@ -382,7 +382,7 @@ class SkillPackageTests(unittest.TestCase):
         self.assertIn("## 值得回看的动人情节片段", output)
         headings = re.findall(r"(?m)^## .+$", output)
         self.assertEqual(headings[-1], "## 值得回看的动人情节片段")
-        self.assertGreaterEqual(len(re.findall(r"(?m)^\\*\\*片段[一二三四五六七八九十]+", output)), 3)
+        self.assertGreaterEqual(len(re.findall(r"(?m)^\*\*片段[一二三四五六七八九十]+", output)), 3)
         for phrase in ("红围巾", "台风夜", "送他回家", "灯塔"):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, output)
