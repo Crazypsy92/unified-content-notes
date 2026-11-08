@@ -65,7 +65,48 @@ Callout 只用于少量真正重要的信息：
 - 全篇 Callout 不超过题目数的 20%。
 - 仅用于关键安全风险、跨题总结或必须单独提醒的边界。
 - 不连续堆叠色块，不把每个例子和表格装进背景框。
-- 不使用 CSS snippets、HTML 或内联样式；颜色由 Obsidian 主题的原生 Callout 决定。
+- 不使用外部 CSS snippets 或硬编码色值；**仅关键技术文字允许受控的内联 `<span>` 同时设置主题色文字与浅背景**。Callout 仍使用 Obsidian 原生主题颜色，标准写法见下文。
+
+
+## 技术重点的文字背景高亮
+
+**默认启用主题色文字 + 浅背景**，借鉴情感观点文案的语义高亮，但不让整道题成为色块。优先突出可复述的关键句；普通段落、表格、代码与公式保持清爽。每题通常选 1～3 处，短题只选一句；**不要求每题凑满三色**。
+
+| 语义色 | 内容 | 高亮判断 |
+| --- | --- | --- |
+| 蓝青色 | 核心回答、重要机制和明确结论 | 最值得直接记忆并口述的完整分句 |
+| 绿色 | 工程案例、可验证现象、数据及事实证据 | 有来源和验证级别的具体依据 |
+| 橙色 | 常见误区、版本差异、技术取舍和工程风险 | 决定结论适用范围的限定条件 |
+
+**Obsidian HTML 写法：** 仅使用 Obsidian 主题变量。`--text-highlight-bg` 是回退背景；当阅读器支持 `color-mix()` 时，后一项使用与文字同色的半透明背景，适应深浅主题。内联样式不需要用户自行安装 CSS snippets。
+
+~~~markdown
+<span style="color: var(--color-cyan); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-cyan) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">可直接口述的核心结论</span>
+
+<span style="color: var(--color-green); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-green) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">有依据的工程场景或可验证现象</span>
+
+<span style="color: var(--color-orange); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-orange) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">技术风险、适用限制和常见误区</span>
+~~~
+
+**一题示例：**
+
+~~~markdown
+# 嵌入式面试八股
+
+## 一、STM32 基础
+
+### 1. DMA 为什么能减轻 CPU 负担？
+
+**核心回答：** <span style="color: var(--color-cyan); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-cyan) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">DMA 配置完成后可在外设与存储器之间搬运数据，CPU 不必逐字节执行搬运指令。</span> CPU 仍负责初始化、事件处理和后续业务逻辑。
+
+**工作原理：** CPU 设置传输方向、地址与长度，DMA 控制器在请求条件满足时使用系统总线传输。
+
+**工程案例（典型场景）：** <span style="color: var(--color-green); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-green) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">串口接收结合 DMA 和缓冲区，可以减少 CPU 对逐字节数据搬运的参与。</span> 此处仅为教学示例，未声称硬件实测。
+
+**易错点：** <span style="color: var(--color-orange); background-color: var(--text-highlight-bg); background-color: color-mix(in srgb, var(--color-orange) 16%, transparent); font-weight: 600; border-radius: 3px; padding: 0 0.15em;">DMA 并非没有总线开销，也不意味着 CPU 完全不处理接收流程。</span>
+~~~
+
+**兼容与边界：** 上述效果应在 Obsidian 的阅读视图或实时预览中查看；源码模式显示标签属于正常现象。若环境过滤内联样式，可用 Obsidian 原生 `==重点==` 实现单色背景；再不支持时降级为 `**加粗**`。不要使用硬编码色值、CSS snippets、整段背景或嵌套标签；不要把 `<span>` 包在公式、代码、表格、标题或链接中。只改格式任务除非明确授权，否则不新增高亮。
 
 ## 表格、代码与流程图
 
@@ -119,3 +160,5 @@ $$
 - [ ] 数学公式在 Obsidian 阅读视图中正常渲染。
 - [ ] 章节、题目和索引链接一致。
 - [ ] 深色主题下有自然留白，长段落按完整意思拆分。
+- [ ] 核心技术句有适度的蓝青 / 绿 / 橙色浅文字背景，颜色与语义一致，不将整题涂色；编辑和阅读视图下均检查排版。
+- [ ] 使用主题变量，未混入硬编码色值；代码、公式、表格、链接和原始文字没有被高亮破坏。
