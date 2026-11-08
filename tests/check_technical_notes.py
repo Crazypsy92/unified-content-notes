@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate headings, sparse Callouts, theme-aware highlights, and Obsidian MathJax."""
+"""Validate headings, native Obsidian Callout cards, formulas and legacy styling."""
 from __future__ import annotations
 import argparse
 import re
@@ -33,12 +33,18 @@ def validate(path: Path) -> list[str]:
 
     callout_count = sum(1 for line in lines if re.match(r"^> \[![a-z]", line))
     question_count = len(question_heads)
-    max_callouts = question_count // 5
+    # Obsidian technical notes use several colored cards per question, not a 20% quota.
+    max_callouts = max(8, question_count * 8)
     if callout_count > max_callouts:
         errors.append(
-            f"too many Callouts: {callout_count} for {question_count} questions "
-            f"(maximum 20% = {max_callouts})"
+            f"excessive Callout fragmentation: {callout_count} for {question_count} questions "
+            f"(soft maximum {max_callouts}; consolidate unrelated micro-cards)"
         )
+    for n, line in enumerate(lines):
+        if re.match(r"^> \[![a-z-]+\]", line, re.I) and n and lines[n - 1].strip():
+            errors.append(f"line {n + 1}: Callout must start after a truly blank line")
+    if len(re.findall(r"==.+?==", source)) > 2 * max(1, question_count) + 5:
+        errors.append("too many inline highlights; prefer semantic Callout backgrounds")
 
     visible = "\n".join(lines)
     # Inline code is literal text, not a rendered formula.
@@ -111,7 +117,7 @@ def main() -> int:
                 print(f"FAIL {path}: {error}", file=sys.stderr)
             failed = True
         else:
-            print(f"PASS {path}: headings / Callout density / semantic highlights / MathJax")
+            print(f"PASS {path}: headings / Callout boundaries / highlights / MathJax")
     return 1 if failed else 0
 
 if __name__ == "__main__":
