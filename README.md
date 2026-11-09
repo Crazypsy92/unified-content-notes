@@ -44,7 +44,8 @@ unified-content-notes/
 │   └── format-only.md
 ├── modules/
 │   ├── relationship-analysis.md
-│   └── novel-analysis.md
+│   ├── novel-analysis.md
+│   └── humanistic-reflection.md
 ├── preferences/
 │   ├── README.md
 │   └── user-preferences.template.md
@@ -186,6 +187,14 @@ Natural language works too. The prefix is useful where the skill loader supports
 ## Novel deep-reading mode
 
 For a full novel reading note, load `modules/novel-analysis.md` after `core/narrative-analysis.md`. The plot recap is the narrative center of the note, not a short synopsis: for a complete full-length novel it will usually occupy about 35–50% of the output and retain the characters' situations, choices, consequences, and emotional changes. The module also adds source-grounded character and literary analysis, author interviews / criticism when requested or available, and a final section with 3–8 memorable scene replays written in original paraphrase. It does not reproduce long copyrighted passages or invent scenes and dialogue. The default delivery is one Markdown file per novel, with a simple heading structure and no unnecessary folder hierarchy.
+
+## Humanistic reflection for literature and film
+
+Load `modules/humanistic-reflection.md` when the user asks to develop humanistic understanding, explore a work's themes and ethical / social questions, or be guided through reflection step by step. It is an optional overlay for novels, films, series, theatre, and suitable documentary narratives—not a replacement for plot analysis.
+
+The guided path moves from **a concrete scene → the character's circumstances and choices → relationships and social / historical context → human questions → alternative interpretations → artistic form → present-day relevance → a provisional personal judgment**. For novels, examine narration, point of view, time, language, imagery, and structure. For film, examine framing, camera position and movement, composition, lighting, color, editing, sound, silence, performance, and scene design—but only when the actual audiovisual material is available.
+
+When the user wants an interactive guide, ask one focused question per turn and adapt to the user's answer. When they request a complete note, provide a compact sequence of 3–6 meaningful prompts with textual anchors. Do not turn every work into a moral lesson, force a positive takeaway, or claim one definitive interpretation. Ordinary plot recaps do not automatically load this module; format-only tasks never do.
 
 ## Default writing conventions
 
