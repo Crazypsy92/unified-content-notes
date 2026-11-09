@@ -33,7 +33,7 @@ class HumanisticReflectionTests(unittest.TestCase):
         self.assertIn("普通剧情总结", module)
         self.assertIn("format-only", module)
         self.assertIn("不强行升华", module)
-        self.assertIn("不强制", module)
+        self.assertIn("不必每次全部完成", module)
 
     def test_film_analysis_requires_audiovisual_evidence(self):
         module = read("modules/humanistic-reflection.md")
