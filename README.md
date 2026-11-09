@@ -164,6 +164,7 @@ The skill routes by structure, not by website:
 | **文案 + 个人感悟型** | First-person reflections and journals | Preserve first-person voice, uncertainty, and personal judgment |
 | **小说深度阅读型** | Full-length novels and complete literary works | A scene-rich plot recap, character arcs, themes, author / critic context, and memorable scenes at the end |
 | **作品 + 剧情 / 人物解读型** | Film, documentary, short story, or character analysis | Source facts and character actions first; interpretation grounded in evidence |
+| **作品 + 人文思考型** | Guided reflection on novels, films, series, and narrative works | Move from concrete scenes to character choices, social context, multiple interpretations, artistic form, and a provisional personal judgment |
 | **图文 + 多页卡片型** | Carousels, screenshots, slide-like posts | Preserve page order, text, numbers, and relationships |
 | **混合型 / 自动判断** | Sources containing arguments, cases, dialogue, and practical advice | Route each section according to its actual structure |
 
