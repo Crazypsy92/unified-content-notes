@@ -43,6 +43,8 @@ unified-content-notes/
 │   ├── method-notes.md
 │   └── format-only.md
 ├── modules/
+│   ├── genre-reading-router.md
+│   ├── historical-political-analysis.md
 │   ├── relationship-analysis.md
 │   ├── novel-analysis.md
 │   └── humanistic-reflection.md
@@ -57,6 +59,10 @@ unified-content-notes/
 ├── examples/
 └── tests/
 ~~~
+
+## Cross-genre reading routes
+
+The skill routes action, textual structure, and disciplinary/literary lens separately. Its five maintained lenses are historical-political analysis, investigation/report, theory/philosophy, speech/essay, and novel/literature. They reuse existing argument, narrative, documentary, source-boundary, and Obsidian modules. The historical-political extension adds chronology, actors and institutions, interests and coalitions, causal claims, source levels, and bounded reading units. See [`modules/genre-reading-router.md`](modules/genre-reading-router.md) and [`modules/historical-political-analysis.md`](modules/historical-political-analysis.md). These are reading lenses, not duplicated templates.
 
 ### Shared rules and specialized modules
 

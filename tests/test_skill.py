@@ -46,6 +46,33 @@ class SkillPackageTests(unittest.TestCase):
             with self.subTest(link=link):
                 self.assertTrue((ROOT / link).is_file())
 
+    def test_cross_genre_router_covers_five_requested_genres(self):
+        router = read("modules/genre-reading-router.md")
+        structure = read("core/structure-router.md")
+        for label in ("历史与政治分析", "调查研究与报告", "理论与哲学", "演讲与思想随笔", "小说与文学"):
+            with self.subTest(genre=label):
+                self.assertIn(label, router)
+        for path in (
+            "historical-political-analysis.md",
+            "../core/argument-analysis.md",
+            "../core/knowledge-analysis.md",
+            "../core/narrative-analysis.md",
+            "novel-analysis.md",
+            "humanistic-reflection.md",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(path, router)
+        self.assertIn("modules/genre-reading-router.md", read("SKILL.md"))
+        self.assertIn("genre-reading-router.md", structure)
+
+    def test_historical_political_module_preserves_sources_and_unit_scope(self):
+        module = read("modules/historical-political-analysis.md")
+        for phrase in ("因果链", "利益、结盟与冲突", "同时代材料", "后出研究", "未知", "阅读单元"):
+            with self.subTest(requirement=phrase):
+                self.assertIn(phrase, module)
+        self.assertIn("../core/source-boundaries.md", module)
+        self.assertIn("../core/argument-analysis.md", module)
+
     def test_relationship_module_declares_inheritance(self):
         content = read("modules/relationship-analysis.md")
         self.assertIn("../core/argument-analysis.md", content)

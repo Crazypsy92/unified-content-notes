@@ -12,13 +12,13 @@ Unified Content Notes is **one skill with three actions**:
 | Explain | Make the source understandable through grounded reasoning and clearly marked interpretation | Invent quotes, causes, scientific proof, or unseen scenes |
 | Format only | Improve Markdown layout while preserving wording and order | Paraphrase, silently correct spelling, or omit details |
 
-The platform is an input source, not an action or content genre.
+The platform is an input source, not an action or content genre. Action, textual structure, and disciplinary/literary lens are separate routing decisions; genre modules should reuse existing core behavior rather than recreate it.
 
 ## Module architecture
 
 - SKILL.md is the entrypoint. Keep it concise and focused on routing, loading rules, and universal constraints.
 - core/ contains shared rules and reusable content structures. Define each common rule once.
-- modules/ contains domain-specific extensions. A module must state its parent (if any), its loading condition, and only the additional rules it contributes.
+- modules/ contains domain-specific extensions and the genre router. An analysis module must state its parent (if any), its loading condition, and only the additional rules it contributes; a router selects existing modules instead of duplicating them.
 - preferences/ contains a neutral preference template and instructions. A user's filled user-preferences.md is local-only and must not be committed.
 - references/ contains optional source/platform references and compatibility notes; it should not duplicate canonical rules.
 - examples/ contains original or rights-cleared input/output pairs.
