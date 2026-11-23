@@ -60,6 +60,21 @@ unified-content-notes/
 └── tests/
 ~~~
 
+## Immersive reader-perspective notes
+
+For a complete novel or a short-story anthology, the skill supports a **scene-led, natural reader voice** based on a reader-approved revision of the Chinese reading notes for Lu Xun's *The True Story of Ah Q*. It does not treat first-person pronouns as a substitute for personal reading; it begins with characters, circumstances, decisions, and consequences, then develops grounded interpretations and open questions.
+
+- Avoid a report-like narrator (“the text points out”, “the author argues”) where a direct scene or observation would be clearer.
+- Also avoid repetitive “I read / I think / I feel” at the start of each paragraph; never invent the user's actual emotional experience.
+- For style-only rewrites of analytical notes, retain the original depth, key scenes, character relationships, commentary, sources, and internal anchors. Check every story individually; do not reduce a detailed scene analysis to a few generic paragraphs.
+- The rules live in [`modules/novel-analysis.md`](modules/novel-analysis.md) and [`core/quality-check.md`](core/quality-check.md), with routing through `SKILL.md`. Format-only mode remains strictly unchanged.
+
+**Reusable Chinese request:**
+
+```text
+用 unified-content-notes 帮我精读/优化这篇小说，采用《阿Q正传》已认可的自然读者视角：人物和场景先行，讲清行动及后果，再自然融入自己的理解；不要会议纪要式第三人称，不要每段机械写“我认为”；保留原有情节、人物分析、独特思考和来源，不要为改文风而删减。
+```
+
 ## Cross-genre reading routes
 
 The skill routes action, textual structure, and disciplinary/literary lens separately. Its five maintained lenses are historical-political analysis, investigation/report, theory/philosophy, speech/essay, and novel/literature. They reuse existing argument, narrative, documentary, source-boundary, and Obsidian modules. The historical-political extension adds chronology, actors and institutions, interests and coalitions, causal claims, source levels, and bounded reading units. See [`modules/genre-reading-router.md`](modules/genre-reading-router.md) and [`modules/historical-political-analysis.md`](modules/historical-political-analysis.md). These are reading lenses, not duplicated templates.
