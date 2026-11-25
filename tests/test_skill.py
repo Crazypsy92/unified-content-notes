@@ -18,6 +18,15 @@ class SkillPackageTests(unittest.TestCase):
         self.assertRegex(frontmatter, r"(?m)^name:\s*unified-content-notes\s*$")
         self.assertRegex(frontmatter, r"(?m)^description:")
 
+    def test_article_refinement_subskill_is_routed_and_separate(self):
+        content = read("SKILL.md")
+        subskill = read("skills/article-refinement/SKILL.md")
+        self.assertIn("skills/article-refinement/SKILL.md", content)
+        self.assertIn("article-refinement", content)
+        self.assertIn("name: article-refinement", subskill)
+        self.assertIn("不以规避 AIGC 检测", subskill)
+        self.assertIn("不编造", subskill)
+
     def test_three_actions_are_defined(self):
         content = read("core/action-router.md")
         for label in ("summarize", "explain", "format-only"):
@@ -26,7 +35,7 @@ class SkillPackageTests(unittest.TestCase):
 
     def test_entrypoint_is_compact_and_routes_to_core(self):
         content = read("SKILL.md")
-        self.assertLess(len(content), 6500)
+        self.assertLess(len(content), 7500)
         for path in (
             "core/action-router.md",
             "core/structure-router.md",

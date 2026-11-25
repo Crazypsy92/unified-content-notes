@@ -19,6 +19,7 @@ The platform is an input source, not an action or content genre. Action, textual
 - SKILL.md is the entrypoint. Keep it concise and focused on routing, loading rules, and universal constraints.
 - core/ contains shared rules and reusable content structures. Define each common rule once.
 - modules/ contains domain-specific extensions and the genre router. An analysis module must state its parent (if any), its loading condition, and only the additional rules it contributes; a router selects existing modules instead of duplicating them.
+- skills/ contains independently callable sub-skills with their own entrypoint and local references. The root skill may route to them, but their rules and invocation remain distinct.
 - preferences/ contains a neutral preference template and instructions. A user's filled user-preferences.md is local-only and must not be committed.
 - references/ contains optional source/platform references and compatibility notes; it should not duplicate canonical rules.
 - examples/ contains original or rights-cleared input/output pairs.

@@ -1,8 +1,10 @@
 # Unified Content Notes
 
-**One skill. Three actions. Structure-aware notes for almost any content.**
+**One repository. Two independently callable skills. Structure-aware notes and article refinement.**
 
 Unified Content Notes turns source material into clear, reusable Markdown. It supports short-form videos, Bilibili lectures, Xiaohongshu image posts, X threads, podcasts, articles, movies, novels, documentaries, tutorials, conversations, and personal stories **when the relevant source content is provided or actually accessible**.
+
+The repository keeps the original unified-content-notes skill for content summarization, explanation, and format-only work, and adds article-refinement as a separately callable skill for reviewing and improving existing writing. Install the whole repository to use both, or install only skills/article-refinement/ when you only need the writing-review skill.
 
 It separates two decisions:
 
@@ -48,6 +50,12 @@ unified-content-notes/
 │   ├── relationship-analysis.md
 │   ├── novel-analysis.md
 │   └── humanistic-reflection.md
+├── skills/
+│   └── article-refinement/
+│       ├── SKILL.md
+│       ├── README.md
+│       ├── references/
+│       └── examples/
 ├── preferences/
 │   ├── README.md
 │   └── user-preferences.template.md
@@ -115,6 +123,41 @@ The optional third layer is for **your own presentation defaults**, not a second
 4. `preferences/user-preferences.md` is ignored by Git so personal settings are not accidentally published.
 
 The preference layer may set output language, target format, heading depth, paragraph indentation, compression density, source-retention preference, highlighting preference, and tone. It cannot override source integrity, copyright boundaries, the requested action, or format-only protection. A specific instruction in the current request overrides a saved preference.
+
+## Article refinement skill
+
+The repository includes a second, independently callable skill: **article-refinement**. It reviews and improves existing drafts; it does not summarize source material or generate a paper from scratch.
+
+| Mode | Purpose |
+| --- | --- |
+| **Audit** | Identify vague claims, unsupported statements, logic gaps, repetition, and style problems without rewriting the whole text |
+| **Light Edit** | Make the smallest useful language changes while preserving the author's meaning and voice |
+| **Structural Review** | Review section order, paragraph logic, evidence, methods, and consistency between aims and actual work |
+| **Proofread** | Check typos, grammar, punctuation, terminology, and formatting only |
+
+**Explicit invocation**
+
+~~~text
+$article-refinement 审校这份开题报告，先指出问题，不要直接重写。
+$article-refinement 轻量润色这段文字，保留我的表达习惯、技术参数和参考文献。
+$unified-content-notes article-refinement 检查研究目标、研究方法和实验方案是否一致。
+~~~
+
+When the whole repository is installed, use the $unified-content-notes article-refinement route. When only the nested skill is installed, use $article-refinement. The two skills remain separate in behavior: article refinement does not inherit the content-note templates, and content summarization does not trigger academic rewriting.
+
+**Install only article-refinement**
+
+~~~bash
+git clone --filter=blob:none --no-checkout https://github.com/Crazypsy92/unified-content-notes.git
+cd unified-content-notes
+git sparse-checkout init --cone
+git sparse-checkout set skills/article-refinement
+git checkout main
+~~~
+
+Copy skills/article-refinement/ into your agent skills directory as article-refinement/. For the original content-notes skill, continue installing the repository root as unified-content-notes/.
+
+The skill improves clarity, evidence, precision, and author-controlled expression. It does not promise to bypass AI detectors or guarantee an AIGC score.
 
 ## Obsidian layout and usage
 
