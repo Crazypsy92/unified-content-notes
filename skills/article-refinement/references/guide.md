@@ -30,6 +30,8 @@ The author remains responsible for the research question, methods, evidence, ana
 
 ## Revision and Fidelity
 
+默认保护技术术语、单位、公式、引用标记、参考文献序号和实验条件；发现冲突时标记为作者确认，不自行改写。
+
 ### Minimal-edit hierarchy
 
 Apply the smallest intervention that solves the problem:
